@@ -1,46 +1,60 @@
-# Group B2 - Air quality and heart disease pipeline (Python)
+# Group B: Assignment B2 - Air Quality and Heart Disease Pipeline
 
-Aim
-- Perform data cleaning, integration, transformation, error correction, and model building.
+## Problem Statement
+Implement a data processing pipeline that performs data cleaning, integration, transformation, error correction, and model building using two different datasets: Air Quality and Heart Disease.
 
-Tools and environment
+## Objectives
+1. Perform data cleaning (handling nulls, duplicates, type conversions).
+2. Implement error correction for out-of-range values.
+3. Integrate datasets and store them in a relational database (SQLite).
+4. Apply data transformations such as scaling and encoding.
+5. Build and evaluate a predictive model (Logistic Regression).
+
+## Theory
+### Data Pipeline Stages
+- **Data Cleaning:** Removing noise and correcting inconsistencies.
+- **Data Integration:** Combining data from multiple sources.
+- **Data Transformation:** Converting data into suitable formats for modeling (e.g., Z-score normalization).
+- **Error Correction:** Identifying and fixing data entry errors using domain-specific ranges.
+- **Model Building:** Using machine learning algorithms to extract patterns or predict outcomes.
+
+## Prerequisites
 - Python 3.9+
-- pandas, numpy, scikit-learn
+- libraries: `pandas`, `numpy`, `scikit-learn`, `joblib`, `sqlite3`
 
-Files
-- air_heart_pipeline.py
-- requirements.txt
-- data/air_quality_sample.csv
-- data/heart_disease_sample.csv
+## Procedure
+1. Load Air Quality and Heart Disease datasets (use samples if primary files are missing).
+2. Clean Air Quality data: handle missing values (-200), convert datetime, and remove duplicates.
+3. Clean Heart Disease data: handle "?" values, convert types, and clip out-of-range values.
+4. Integrate both datasets into an SQLite database (`health_env.db`).
+5. Perform Z-score normalization (StandardScaler) on heart disease features.
+6. Concatenate samples of both datasets for a unified integration preview.
+7. Split the heart disease data into training and testing sets.
+8. Train a Logistic Regression model and evaluate its performance.
+9. Save the model and metrics to the `outputs/` directory.
 
-Steps
-1. Install dependencies:
+## Setup and Execution
+1. **Create and activate a virtual environment:**
    ```bash
-   python -m venv .venv
-   .venv\Scripts\activate
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+2. **Install Dependencies:**
+   ```bash
    pip install -r requirements.txt
    ```
-2. (Optional) Place real datasets:
-   - data/air_quality.csv
-   - data/heart_disease.csv
-3. Run:
+3. **Run the Script:**
    ```bash
    python air_heart_pipeline.py
    ```
-4. Check outputs in outputs/.
 
-Operations covered (manual aligned)
-- Data cleaning: null handling (dropna/fillna), duplicates, type fixes (to_datetime)
-- Error correction: range checks and replacements
-- Data integration: merge datasets and store an integrated preview
-- Data transformation: encoding and scaling
-- Model building: train/test split, train a model, evaluate metrics
+The script falls back to the included sample CSV files. For full practical execution, place the real datasets in `data/` as `air_quality.csv` and `heart_disease.csv`.
 
-Outputs
-- air_quality_clean.csv
-- heart_disease_clean.csv
-- heart_scaled.csv
-- integration_preview.csv
-- health_env.db (SQLite integration)
-- heart_model.pkl
-- metrics.json
+## Files
+- `air_heart_pipeline.py`: Pipeline implementation.
+- `requirements.txt`: Dependencies.
+- `data/`: Sample CSV files.
+- `outputs/`: Cleaned data, model, and metrics.
+
+## Conclusion
+The assignment demonstrates a complete data engineering and basic machine learning pipeline, covering everything from raw data cleaning to model evaluation.

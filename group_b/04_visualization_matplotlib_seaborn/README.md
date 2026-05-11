@@ -1,40 +1,51 @@
-# Group B4 - Visualization with matplotlib and seaborn
+# Assignment B4: Data Visualization using Matplotlib and Seaborn
 
-Aim
-- Visualize the datasets from assignments 2 and 3 using matplotlib and seaborn.
+## 1. Problem Statement
+Use Matplotlib and Seaborn libraries in Python to visualize various datasets (Air Quality, Heart Disease, and Forest Fires) to identify patterns, correlations, and distributions.
 
-Files
-- visualize_air_heart_forest.py
-- requirements.txt
-- data/air_quality_sample.csv
-- data/heart_disease_sample.csv
-- data/forest_fires_sample.csv
+## 2. Objectives
+- Perform exploratory data analysis through visualization.
+- Create time-series plots, heatmaps, and categorical bar charts.
+- Master Matplotlib and Seaborn styling and layouts.
 
-Steps
-1. Install dependencies:
+## 3. Software Requirements
+- Python 3.x
+- Pandas, Matplotlib, Seaborn
+- Jupyter Notebook (Optional) or any Python IDE
+
+## 4. Visualizations Performed
+1. **Air Quality (Time Series):** CO levels over time using a Line Plot.
+2. **Heart Disease (Correlation):** Identifying relationships between attributes using a Correlation Heatmap.
+3. **Forest Fires (Distribution):** Average burned area per month using a Bar Plot.
+
+## 5. Implementation Details
+The script `visualize_air_heart_forest.py` follows these steps:
+- **Data Loading:** Uses Pandas to load datasets from the `data/` directory.
+- **Preprocessing:** Handles date-time conversions and numeric formatting.
+- **Plotting:** 
+  - `plt.plot()` for Line Charts.
+  - `sns.heatmap()` for Correlation Matrices.
+  - `sns.barplot()` for monthly aggregations.
+- **Storage:** Saves all plots as PNG files in the `outputs/` directory.
+
+## 6. Execution Steps
+1. **Create and activate a virtual environment:**
    ```bash
-   python -m venv .venv
-   .venv\Scripts\activate
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+2. **Install dependencies:**
+   ```bash
    pip install -r requirements.txt
    ```
-2. (Optional) Place real datasets:
-   - data/air_quality.csv
-   - data/heart_disease.csv
-   - data/forest_fires.csv
-3. Run:
+3. **Run the visualization script:**
    ```bash
    python visualize_air_heart_forest.py
    ```
-4. Check outputs in outputs/.
+4. **View the results:**
+   Check the `outputs/` folder for generated image files.
 
-Visualization types (manual aligned)
-- Line plot for time series
-- Bar or histogram for distributions
-- Box plot for outliers
-- Scatter plot for correlations
-- Heat map for correlation matrices
+The script uses sample Air Quality, Heart Disease, and Forest Fire CSV files unless full datasets named `air_quality.csv`, `heart_disease.csv`, and `forest_fires.csv` are placed in `data/`.
 
-Outputs
-- air_co_timeseries.png
-- heart_corr_heatmap.png
-- forest_area_by_month.png
+## 7. Conclusion
+Visualized complex datasets using Python, demonstrating the ability to communicate data insights through graphical representations.

@@ -1,60 +1,71 @@
-# Group A2 - MapReduce log analysis (Java)
+# Assignment A2: MapReduce Log Analysis
 
-Aim
-- Process a system log file and list users with the maximum total logged-in time.
+## 1. Problem Statement
+Write a MapReduce program using Java to process a system log file. The goal is to calculate the total logged-in time for each user and identify the user(s) with the maximum total logged-in time.
 
-Tools and environment
-- Hadoop (pseudo-distributed)
-- Java (JDK 8+)
-- Ubuntu or WSL
+## 2. Learning Objectives
+- To understand the MapReduce programming model (Map, Reduce, and Driver).
+- To learn how to process structured data (CSV) using Hadoop MapReduce.
+- To implement multi-stage MapReduce jobs (Job Chaining).
 
-Files
-- src/LogDurationDriver.java
-- data/sample_log.csv
+## 3. Input Data Format
+The input is a CSV file with the following columns:
+- `user`: Username
+- `start`: Login timestamp (yyyy-MM-dd HH:mm:ss)
+- `end`: Logout timestamp (yyyy-MM-dd HH:mm:ss)
 
-Input format
-- CSV header: user,start,end
-- Timestamp format: yyyy-MM-dd HH:mm:ss
-- Example: alice,2024-01-01 09:00:00,2024-01-01 12:30:00
+## 4. Implementation Details
+The solution is implemented in two stages:
+1. **Job 1 (Duration Summation):** 
+   - **Mapper:** Calculates duration in seconds for each log entry.
+   - **Reducer:** Sums up durations per user.
+2. **Job 2 (Global Maximum):**
+   - **Mapper:** Emits all user totals with a single constant key.
+   - **Reducer:** Finds the maximum duration and emits the user(s) who achieved it.
 
-Steps
-1. Start Hadoop and verify services:
-   ```bash
-   start-dfs.sh
-   start-yarn.sh
-   jps
-   ```
-2. Prepare the log CSV (convert any raw log to CSV first).
-3. Compile and build the jar:
-   ```bash
-   export HADOOP_CLASSPATH=$(hadoop classpath)
-   mkdir -p build
-   javac -classpath "$HADOOP_CLASSPATH" -d build src/LogDurationDriver.java
-   jar -cvf log-duration.jar -C build/ .
-   ```
-4. Put the input file into HDFS:
-   ```bash
-   hdfs dfs -mkdir -p /input/logs
-   hdfs dfs -put data/sample_log.csv /input/logs/
-   ```
-5. Run the job (two stages):
-   ```bash
-   hadoop jar log-duration.jar LogDurationDriver /input/logs /output/log_totals /output/log_max
-   ```
-   If rerunning, delete old outputs first:
-   ```bash
-   hdfs dfs -rm -r /output/log_totals /output/log_max
-   ```
-6. View results:
-   ```bash
-   hdfs dfs -cat /output/log_totals/part-r-00000
-   hdfs dfs -cat /output/log_max/part-r-00000
-   ```
+## 5. Execution Steps
 
-Expected output
-- /output/log_totals contains total seconds per user
-- /output/log_max contains the user(s) with the maximum total time
+### Step 1: Start Hadoop Daemons
+```bash
+start-dfs.sh
+start-yarn.sh
+jps
+```
 
-Notes
-- If javac cannot find Hadoop classes, ensure HADOOP_CLASSPATH is set for your Hadoop version.
-- Keep the CSV format consistent with the mapper parser in LogDurationDriver.java.
+### Step 2: Compile the Java Code
+```bash
+export HADOOP_CLASSPATH=$(hadoop classpath)
+mkdir -p build
+javac -classpath "$HADOOP_CLASSPATH" -d build src/LogDurationDriver.java
+jar -cvf log-analysis.jar -C build/ .
+```
+
+### Step 3: Prepare HDFS Input
+```bash
+hdfs dfs -mkdir -p /input/log_analysis
+hdfs dfs -rm -f /input/log_analysis/sample_log.csv
+hdfs dfs -put data/sample_log.csv /input/log_analysis/
+```
+
+### Step 4: Run the MapReduce Job
+```bash
+hdfs dfs -rm -r -f /output/totals /output/max_user
+hadoop jar log-analysis.jar LogDurationDriver /input/log_analysis /output/totals /output/max_user
+```
+
+### Step 5: View Results
+```bash
+# Total time per user
+hdfs dfs -cat /output/totals/part-r-00000
+# User(s) with max time
+hdfs dfs -cat /output/max_user/part-r-00000
+```
+
+Expected result on the included sample data:
+```text
+chris    15000
+```
+The exact spacing is Hadoop tab-separated output.
+
+## 6. Viva Questions & Answers
+Refer to the final report for advanced Viva questions related to this assignment.

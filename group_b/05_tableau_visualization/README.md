@@ -1,52 +1,55 @@
-# Group B5 - Tableau visualizations (Adult and Iris)
+# Assignment B5: Data Visualization using Tableau
 
-Aim
-- Create 1D, 2D, 3D, temporal, multidimensional, tree/hierarchical, and network visualizations in Tableau.
+## 1. Problem Statement
+Prepare the Adult and Iris datasets and create various types of visualizations in Tableau, including 1D, 2D, 3D, temporal, multidimensional, tree/hierarchical, and network visualizations.
 
-Files
-- prep_tableau_data.py
-- requirements.txt
-- data/iris_sample.csv
-- data/adult_sample.csv
+## 2. Objectives
+- Clean and prepare data for BI tools using Python.
+- Learn to create diverse chart types in Tableau.
+- Understand how to map dimensions and measures to visual encodings.
 
-Steps
-1. Install dependencies for data prep:
+## 3. Software Requirements
+- Tableau Desktop or Tableau Public
+- Python 3.x (for data preparation)
+- Pandas (for data preparation)
+
+## 4. Visualizations to be Created
+- **1D (Linear):** Histogram of Age (Adult dataset).
+- **2D (Planar):** Scatter plot of Sepal Length vs Sepal Width (Iris dataset).
+- **3D (Volumetric):** Bubble chart using X, Y, and Size/Color.
+- **Temporal:** Line chart of hours worked over time.
+- **Multidimensional:** Scatter plots with multiple encodings (Color, Size, Shape).
+- **Tree/Hierarchical:** Treemap of Education and Occupation hierarchies.
+- **Network:** Visualizing relationships between Education levels and Occupations.
+
+## 5. Implementation Details
+### Data Preparation (`prep_tableau_data.py`)
+- Loads Iris and Adult datasets.
+- Feature Engineering: Calculates areas, bins age/hours into groups.
+- Temporal Data: Adds a synthetic `record_date` for time-series analysis.
+- Network Data: Generates an edge list for network visualization.
+- Exports cleaned CSV files to the `outputs/` directory.
+
+## 6. Execution Steps
+1. **Create and activate a virtual environment:**
    ```bash
-   python -m venv .venv
-   .venv\Scripts\activate
+   python3 -m venv .venv
+   source .venv/bin/activate
    pip install -r requirements.txt
    ```
-2. (Optional) Place full datasets here:
-   - data/iris.csv
-   - data/adult.csv
-3. Run the prep script:
+2. **Prepare Data:**
    ```bash
    python prep_tableau_data.py
    ```
-4. Open Tableau Desktop.
-5. Connect to outputs/iris_tableau.csv and outputs/adult_tableau.csv.
-6. For each visualization, follow the standard workflow:
-   - Connect to data source
-   - Choose dimensions and measures
-   - Apply the visualization type
+3. **Launch Tableau:**
+   Import the generated CSV files from the `outputs/` folder.
+4. **Build Dashboards:**
+   Create worksheets for each required visualization type and assemble them into a dashboard.
 
-Suggested visualizations
-1. 1D (Linear)
-   - Adult: histogram of age
-   - Iris: histogram of sepal_length
-2. 2D (Planar)
-   - Iris: scatter sepal_length vs sepal_width, color by species
-3. 3D (Volumetric)
-   - Iris: scatter with sepal_length (X), sepal_width (Y), petal_length (Size)
-4. Temporal
-   - Adult: line chart of average hours_per_week over record_date
-5. Multidimensional
-   - Adult: scatter of age vs hours_per_week, color by income, size by education_num
-6. Tree/Hierarchical
-   - Adult: treemap of education -> occupation by count
-7. Network
-   - Adult: use outputs/adult_network_edges.csv as edges (source=occupation, target=education)
+Generated files:
+- `outputs/adult_tableau.csv`
+- `outputs/iris_tableau.csv`
+- `outputs/adult_network_edges.csv`
 
-Notes
-- record_date is a synthetic date added in the prep script for temporal visualization.
-- For network views, use a Tableau extension or path-based marks.
+## 7. Conclusion
+Successfully prepared datasets and utilized Tableau to create advanced visualizations, enhancing the ability to derive business intelligence from raw data.

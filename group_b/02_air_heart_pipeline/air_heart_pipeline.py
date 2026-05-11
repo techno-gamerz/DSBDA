@@ -40,7 +40,7 @@ def clean_air_quality(df: pd.DataFrame) -> pd.DataFrame:
     num_cols = [c for c in air.columns if c not in ["Date", "Time", "datetime"]]
     for col in num_cols:
         air[col] = pd.to_numeric(air[col], errors="coerce")
-        air[col] = air[col].replace(-200, pd.NA)
+        air[col] = air[col].replace(-200, np.nan)
         air[col] = air[col].fillna(air[col].median())
 
     if "CO" in air.columns:
@@ -50,13 +50,13 @@ def clean_air_quality(df: pd.DataFrame) -> pd.DataFrame:
 
     air["hour"] = air["datetime"].dt.hour
     if "CO" in air.columns:
-        air["co_log"] = np.log1p(air["CO"])
+        air["co_log"] = np.log1p(air["CO"].astype(float))
 
     return air
 
 
 def clean_heart_disease(df: pd.DataFrame) -> pd.DataFrame:
-    heart = df.copy().replace("?", pd.NA)
+    heart = df.copy().replace("?", np.nan)
     for col in heart.columns:
         heart[col] = pd.to_numeric(heart[col], errors="coerce")
     heart = heart.drop_duplicates()

@@ -1,0 +1,6 @@
+.venv/
+venv/
+**/outputs/
+__pycache__/
+*.pkl
+*.db

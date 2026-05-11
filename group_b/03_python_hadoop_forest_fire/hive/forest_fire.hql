@@ -19,7 +19,8 @@ CREATE TABLE forest_fires (
 )
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
-STORED AS TEXTFILE;
+STORED AS TEXTFILE
+TBLPROPERTIES ("skip.header.line.count"="1");
 
 LOAD DATA LOCAL INPATH 'data/forest_fires_sample.csv' INTO TABLE forest_fires;
 

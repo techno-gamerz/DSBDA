@@ -14,9 +14,11 @@ def load_primary() -> pd.DataFrame:
 
 
 def main() -> None:
+    print("Loading data...")
     df = load_primary()
     df2 = pd.read_csv(DATA_DIR / "facebook_metrics_secondary_sample.csv")
 
+    print("Creating subsets...")
     subset_cols = df[[
         "Page total likes",
         "Type",
@@ -26,10 +28,13 @@ def main() -> None:
 
     subset_rows = df[df["Type"] == "Photo"].head(5)
 
+    print("Merging datasets...")
     merged = df.merge(df2, on="Post Month", how="left")
 
+    print("Sorting data...")
     sorted_df = df.sort_values(["Page total likes", "Post Month"], ascending=[False, True])
 
+    print("Transposing data...")
     transposed = (
         df[["Post Month", "Post Weekday", "Lifetime Post Total Reach"]]
         .head(5)
@@ -37,6 +42,7 @@ def main() -> None:
         .T
     )
 
+    print("Reshaping (Melting)...")
     reshaped = df.melt(
         id_vars=["Type", "Post Month"],
         value_vars=["Lifetime Post Total Reach", "Lifetime Engaged Users"],
@@ -44,6 +50,7 @@ def main() -> None:
         value_name="value"
     )
 
+    print("Reshaping (Pivoting)...")
     cast_wide = (
         reshaped.pivot_table(
             index=["Type", "Post Month"],
@@ -55,6 +62,7 @@ def main() -> None:
     )
     cast_wide.columns = [str(c) for c in cast_wide.columns]
 
+    print("Saving outputs...")
     subset_cols.to_csv(OUT_DIR / "subset_cols.csv", index=False)
     subset_rows.to_csv(OUT_DIR / "subset_rows.csv", index=False)
     merged.to_csv(OUT_DIR / "merged.csv", index=False)
@@ -63,7 +71,7 @@ def main() -> None:
     reshaped.to_csv(OUT_DIR / "reshaped.csv", index=False)
     cast_wide.to_csv(OUT_DIR / "cast_wide.csv", index=False)
 
-    print("Saved outputs to", OUT_DIR)
+    print(f"Successfully saved {len(list(OUT_DIR.glob('*.csv')))} files to {OUT_DIR}")
 
 
 if __name__ == "__main__":

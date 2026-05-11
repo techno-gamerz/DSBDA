@@ -1,47 +1,60 @@
-# Group B1 - Facebook metrics operations (Python)
+# Group B: Assignment B1 - Facebook Metrics Operations
 
-Aim
-- Perform data subsets, merge, sort, transpose, and reshape operations on the Facebook metrics dataset.
+## Problem Statement
+Perform fundamental data manipulation operations on the Facebook metrics dataset using the Python Pandas library. The operations include subsetting, merging, sorting, transposing, and reshaping (melt/pivot).
 
-Tools and environment
-- Python 3.9+
-- pandas, numpy
+## Objectives
+1. Implement data subsetting using indexing and selection methods.
+2. Perform data integration by merging multiple datasets.
+3. Apply sorting techniques to organize data.
+4. Demonstrate data restructuring using transposition and reshaping methods.
 
-Files
-- facebook_metrics_ops.py
-- requirements.txt
-- data/facebook_metrics_sample.csv
-- data/facebook_metrics_secondary_sample.csv
+## Theory
+### Data Manipulation with Pandas
+Pandas is a core library for data science in Python.
+- **Subsetting:** `loc` (label-based) and `iloc` (integer-based) allow precise extraction of data.
+- **Merging:** `pd.merge()` provides SQL-like joining capabilities to combine datasets.
+- **Sorting:** `sort_values()` reorders the data based on specified columns.
+- **Transposing:** `.T` attribute flips the axes of the DataFrame.
+- **Melt & Pivot:** `melt()` converts wide data to long format, while `pivot_table()` aggregates and reshapes data into a wide format.
 
-Steps
-1. Install dependencies:
+## Prerequisites
+- Python 3.9 or higher
+- Pandas library
+
+## Procedure
+1. Load the primary Facebook metrics dataset.
+2. Load a secondary dataset for merging demonstration.
+3. Create subsets based on columns and specific row conditions.
+4. Merge the two datasets on a common key (e.g., Post Month).
+5. Sort the data by specific metrics.
+6. Transpose a selection of the data.
+7. Reshape the data using `melt` for a long-form view.
+8. Use `pivot_table` to reshape the long-form data back to a summarized wide format.
+9. Save all results to the `outputs/` directory.
+
+## Setup and Execution
+1. **Create and activate a virtual environment:**
    ```bash
-   python -m venv .venv
-   .venv\Scripts\activate
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+2. **Install Dependencies:**
+   ```bash
    pip install -r requirements.txt
    ```
-2. (Optional) Place the real dataset at data/facebook_metrics.csv. If missing, sample data is used.
-3. Run the script:
+3. **Run the Script:**
    ```bash
    python facebook_metrics_ops.py
    ```
-4. Check outputs in outputs/.
 
-Operations covered (manual aligned)
-- Subsets using indexing, loc, and iloc
-- Merge/concat of two dataframes
-- Sort with sort_values
-- Transpose with transpose or .T
-- Reshape from wide to long and back (melt/pivot)
+The script uses `data/facebook_metrics_sample.csv` and `data/facebook_metrics_secondary_sample.csv` by default. Replace them with the full Facebook metrics dataset using the same column structure if required.
 
-Outputs
-- subset_cols.csv
-- subset_rows.csv
-- merged.csv
-- sorted.csv
-- transposed.csv
-- reshaped.csv
-- cast_wide.csv
+## Files
+- `facebook_metrics_ops.py`: Main implementation script.
+- `requirements.txt`: Dependencies.
+- `data/`: Sample datasets.
+- `outputs/`: Processed CSV results.
 
-Notes
-- If you need the same operations on another dataset (for example, book reviews), reuse the same steps and update file paths.
+## Conclusion
+This assignment demonstrates essential data manipulation skills required for data preprocessing and exploration using the Pandas library.
