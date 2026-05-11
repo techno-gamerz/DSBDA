@@ -1,0 +1,9 @@
+{
+  "review_block": ".review",
+  "reviewer": ".reviewer",
+  "rating": ".rating",
+  "title": ".title",
+  "body": ".body",
+  "date": ".date",
+  "tags": ".tags .tag"
+}
