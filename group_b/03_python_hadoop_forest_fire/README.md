@@ -24,6 +24,10 @@ The dataset contains 517 instances with 13 attributes:
 - area: The burned area of the forest (target variable)
 
 ## 5. Implementation Details
+- **Mapper:** [mapper.py](mapper.py)
+- **Reducer:** [reducer.py](reducer.py)
+- **Hive Script:** [hive/forest_fire.hql](hive/forest_fire.hql)
+
 ### Mapper (`mapper.py`)
 - Reads CSV data from standard input.
 - Skips the header row.

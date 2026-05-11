@@ -16,9 +16,9 @@ Develop a machine learning pipeline to predict the "Chance of Admit" for graduat
 
 ## 4. Implementation Details
 The project is structured as follows:
-- **`admissions_models.py`**: Main script for training and evaluation.
-- **`data/admissions_sample.csv`**: A small subset of the dataset for testing.
-- **`outputs/`**: Contains the saved model and performance report.
+- [admissions_models.py](admissions_models.py): Main script for training and evaluation.
+- [data/admissions_sample.csv](data/admissions_sample.csv): A small subset of the dataset for testing.
+- [outputs/](outputs/): Contains the saved model and performance report.
 
 ### Key Components:
 - **Preprocessing**: Column names are normalized (lowercase, underscores). Features are scaled using `StandardScaler` (within a pipeline for linear models).

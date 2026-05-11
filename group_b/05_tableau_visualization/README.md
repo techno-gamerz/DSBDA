@@ -23,7 +23,7 @@ Prepare the Adult and Iris datasets and create various types of visualizations i
 - **Network:** Visualizing relationships between Education levels and Occupations.
 
 ## 5. Implementation Details
-### Data Preparation (`prep_tableau_data.py`)
+### Data Preparation ([prep_tableau_data.py](prep_tableau_data.py))
 - Loads Iris and Adult datasets.
 - Feature Engineering: Calculates areas, bins age/hours into groups.
 - Temporal Data: Adds a synthetic `record_date` for time-series analysis.

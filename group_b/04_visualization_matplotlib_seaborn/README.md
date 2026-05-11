@@ -19,7 +19,7 @@ Use Matplotlib and Seaborn libraries in Python to visualize various datasets (Ai
 3. **Forest Fires (Distribution):** Average burned area per month using a Bar Plot.
 
 ## 5. Implementation Details
-The script `visualize_air_heart_forest.py` follows these steps:
+The script [visualize_air_heart_forest.py](visualize_air_heart_forest.py) follows these steps:
 - **Data Loading:** Uses Pandas to load datasets from the `data/` directory.
 - **Preprocessing:** Handles date-time conversions and numeric formatting.
 - **Plotting:** 

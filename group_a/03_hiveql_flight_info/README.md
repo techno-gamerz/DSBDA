@@ -17,7 +17,7 @@ To design and implement a flight information system using HiveQL to perform data
 - Flight and Airport datasets in CSV format.
 
 ## Implementation Details
-The system consists of two primary tables:
+The system is implemented in [flight_info.hql](flight_info.hql) and consists of two primary tables:
 - **flights**: An internal table storing flight details like date, delay, origin, and destination.
 - **airports**: An external table mapped to a specific HDFS location containing airport metadata.
 

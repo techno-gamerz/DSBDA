@@ -51,10 +51,10 @@ Pandas is a core library for data science in Python.
 The script uses `data/facebook_metrics_sample.csv` and `data/facebook_metrics_secondary_sample.csv` by default. Replace them with the full Facebook metrics dataset using the same column structure if required.
 
 ## Files
-- `facebook_metrics_ops.py`: Main implementation script.
+- [facebook_metrics_ops.py](facebook_metrics_ops.py): Main implementation script.
 - `requirements.txt`: Dependencies.
-- `data/`: Sample datasets.
-- `outputs/`: Processed CSV results.
+- [data/](data/): Sample datasets.
+- [outputs/](outputs/): Processed CSV results.
 
 ## Conclusion
 This assignment demonstrates essential data manipulation skills required for data preprocessing and exploration using the Pandas library.

@@ -24,13 +24,13 @@ Implement a data processing pipeline that performs data cleaning, integration, t
 
 ## Procedure
 1. Load Air Quality and Heart Disease datasets (use samples if primary files are missing).
-2. Clean Air Quality data: handle missing values (-200), convert datetime, and remove duplicates.
-3. Clean Heart Disease data: handle "?" values, convert types, and clip out-of-range values.
+2. Clean Air Quality data: ([line 33](air_heart_pipeline.py#L33)) handle missing values (-200), convert datetime, and remove duplicates.
+3. Clean Heart Disease data: ([line 57](air_heart_pipeline.py#L57)) handle "?" values, convert types, and clip out-of-range values.
 4. Integrate both datasets into an SQLite database (`health_env.db`).
 5. Perform Z-score normalization (StandardScaler) on heart disease features.
 6. Concatenate samples of both datasets for a unified integration preview.
 7. Split the heart disease data into training and testing sets.
-8. Train a Logistic Regression model and evaluate its performance.
+8. Train a Logistic Regression model ([line 92](air_heart_pipeline.py#L92)) and evaluate its performance.
 9. Save the model and metrics to the `outputs/` directory.
 
 ## Setup and Execution
@@ -51,10 +51,10 @@ Implement a data processing pipeline that performs data cleaning, integration, t
 The script falls back to the included sample CSV files. For full practical execution, place the real datasets in `data/` as `air_quality.csv` and `heart_disease.csv`.
 
 ## Files
-- `air_heart_pipeline.py`: Pipeline implementation.
+- [air_heart_pipeline.py](air_heart_pipeline.py): Pipeline implementation.
 - `requirements.txt`: Dependencies.
-- `data/`: Sample CSV files.
-- `outputs/`: Cleaned data, model, and metrics.
+- [data/](data/): Sample CSV files.
+- [outputs/](outputs/): Cleaned data, model, and metrics.
 
 ## Conclusion
 The assignment demonstrates a complete data engineering and basic machine learning pipeline, covering everything from raw data cleaning to model evaluation.

@@ -15,13 +15,14 @@ The input is a CSV file with the following columns:
 - `end`: Logout timestamp (yyyy-MM-dd HH:mm:ss)
 
 ## 4. Implementation Details
-The solution is implemented in two stages:
+The solution is implemented in two stages in [LogDurationDriver.java](src/LogDurationDriver.java):
+
 1. **Job 1 (Duration Summation):** 
-   - **Mapper:** Calculates duration in seconds for each log entry.
-   - **Reducer:** Sums up durations per user.
+   - **Mapper:** ([Line 25](src/LogDurationDriver.java#L25)) Calculates duration in seconds for each log entry.
+   - **Reducer:** ([Line 65](src/LogDurationDriver.java#L65)) Sums up durations per user.
 2. **Job 2 (Global Maximum):**
-   - **Mapper:** Emits all user totals with a single constant key.
-   - **Reducer:** Finds the maximum duration and emits the user(s) who achieved it.
+   - **Mapper:** ([Line 77](src/LogDurationDriver.java#L77)) Emits all user totals with a single constant key.
+   - **Reducer:** ([Line 104](src/LogDurationDriver.java#L104)) Finds the maximum duration and emits the user(s) who achieved it.
 
 ## 5. Execution Steps
 

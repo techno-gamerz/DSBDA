@@ -21,6 +21,16 @@ Install and configure Hadoop in pseudo-distributed (single node) and multi-node 
 
 ## 5. Implementation Steps (Pseudo-Distributed Mode)
 
+### Reference Files
+- **Configuration Templates:** [config/](config/)
+  - [core-site.xml](config/core-site.xml)
+  - [hdfs-site.xml](config/hdfs-site.xml)
+  - [mapred-site.xml](config/mapred-site.xml)
+  - [yarn-site.xml](config/yarn-site.xml)
+- **Verification Scripts:** [scripts/](scripts/)
+  - [verify_env.sh](scripts/verify_env.sh) (Linux/WSL)
+  - [verify_env.ps1](scripts/verify_env.ps1) (PowerShell)
+
 ### Step 1: Install Prerequisites
 Update the package repository and install Java and SSH.
 ```bash
