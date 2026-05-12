@@ -1,0 +1,6633 @@
+
+╭─────────────────────────────────────────────────╮
+│ >_ OpenAI Codex (v0.130.0)                      │
+│                                                 │
+│ model:     gpt-5.5 medium   /model to change    │
+│ directory: /mnt/c/Users/ADMIN/Desktop/new/DSBDA │
+╰─────────────────────────────────────────────────╯
+
+  Tip: Use /rename to rename your threads for easier thread resuming.
+
+╭─────────────────────────────────────────────────╮
+│ >_ OpenAI Codex (v0.130.0)                      │
+│                                                 │
+│ model:     gpt-5.5 medium   /model to change    │
+│ directory: /mnt/c/users/admin/desktop/new/dsbda │
+╰─────────────────────────────────────────────────╯
+
+  Tip: New Use /fast to enable our fastest inference with increased plan usage.
+
+
+› hey this is a practice repo for tomorrows DSBDA Lab Practical tomorrow, please have a look at "List of Laboratory Assignments.txt" for all lab assignments, and DSBDAL.pdf and "DSBDA MMCOE.pdf" for sample
+  lab manual, and rest are lab performed.
+
+
+• I’ll inspect the assignment list, the two PDFs, and the existing performed labs so I can understand the scope and what’s already prepared. I’ll use the PDF workflow for the manuals and keep the first pass
+  focused on structure and coverage.
+
+• I found the repo already has extracted text versions of both manuals (DSBDAL.txt, DSBDA_MMCOE.txt), plus grouped performed labs under group_a, group_b, and group_c. I’m reading the assignment list and lab
+  READMEs now to map required vs completed work.
+
+• The assignment coverage is complete at folder level: A1-A3, B1-B5, and C1-C2 all exist. One important difference from the MMCOE manual: it appears to omit the separate Forest Fire/PyHadoop assignment from
+  its visible experiment list and numbers visualization earlier, while your List of Laboratory Assignments.txt includes Forest Fire as B3, so I’m treating your assignment list as the canonical target.
+
+• The repo is about 355 MB mainly because some assignment folders include .venv directories and generated outputs. I’m doing a quick readiness check now: obvious placeholders, script syntax, and whether the
+  Java/Hive artifacts are present for the Hadoop-side labs.
+
+• Static syntax compilation passed for every Python script outside the virtualenvs. The only placeholder-like hit in performed labs is the review scraper README showing https://example.com/product as a sample
+  command, not necessarily a code defect; I’ll run the executable Python labs next to see what actually works in this environment.
+
+• Most runnable labs work with the system Python. Two need the documented invocation/environment: B4 needs its local virtualenv for seaborn, and C1 requires a --source argument, so I’m rerunning those in the
+  right shape and checking the Hadoop streaming mapper/reducer locally.
+
+• I reviewed the repo against List of Laboratory Assignments.txt, DSBDAL.pdf/DSBDAL.txt, and DSBDA MMCOE.pdf/DSBDA_MMCOE.txt.
+
+  Coverage is good: all required labs are present.
+
+  - Group A: Hadoop install, Java MapReduce log analysis, HiveQL flight system
+  - Group B: Facebook metrics, Air + heart pipeline, Forest Fire PyHadoop/Hive, Matplotlib/Seaborn visualization, Tableau prep
+  - Group C: Review scraper, admissions ML mini project
+
+  Quick checks run:
+
+  - Python syntax check: passed for all .py files outside .venv
+  - B1 Facebook script: passed
+  - B2 Air/Heart pipeline: passed
+  - B3 mapper/reducer local MapReduce: passed
+  - B5 Tableau prep: passed
+  - C1 scraper: passed when run with --source data/sample_product_page.html
+  - C2 admissions ML: passed
+
+  One issue found:
+
+  - group_b/04_visualization_matplotlib_seaborn/visualize_air_heart_forest.py fails because seaborn is missing from both system Python and that folder’s .venv.
+  - The requirements.txt correctly lists seaborn, so fix is simply:
+
+    cd group_b/04_visualization_matplotlib_seaborn
+    ./.venv/bin/pip install seaborn
+    ./.venv/bin/python visualize_air_heart_forest.py
+
+  Notes for practical readiness:
+
+  - Hadoop, Hive, and Tableau labs are prepared as manual/execution labs, but I did not run actual Hadoop/Hive/Tableau services here.
+  - Repo already has generated outputs for several labs, which is useful for practice.
+  - Git worktree already has many modified/staged files; I did not revert anything.
+
+
+› look all i am looking for is that are they vorrectly executable in first go on any suitable system and do they have appropriate instructions and steps in readme file, refeering all 3 references
+
+
+• Understood. I’ll audit this as a first-run practical package: whether each lab can execute on a suitable machine, whether the README steps are enough, and whether they match the assignment list plus both
+  manuals. If I find gaps, I’ll patch the READMEs/scripts instead of only reporting them.
+
+• The READMEs are mostly aligned, but a few are not first-run clean: B1/B2 assume an already existing .venv, B4 does not tell users to use requirements.txt, A2/A3/B3 need HDFS output cleanup steps for reruns,
+  and the Hive scripts may load CSV headers as data unless the Hive version/table settings handle that. I’m checking the actual code/data details before patching the instructions.
+
+• I’m going to make the instructions first-run deterministic now. Main changes: add exact suitable-system assumptions, create-venv commands where needed, cleanup commands for Hadoop/Hive reruns, and notes
+  where manual-era Hive features require Hive 2.x.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• I updated the READMEs so they do not depend on an already-prepared environment. I’m now doing a final consistency pass: checking the changed instructions, confirming commands still match file names, and
+  rerunning the local executable checks that don’t require Hadoop/Hive/Tableau services.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• One actual execution problem remains in the Hive part of B3: the forest-fire sample CSV has a header row, and the Hive table did not tell Hive to skip it. That can produce a bogus month group. I’m patching
+  the Hive script so the supplied CSV runs cleanly on first execution.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• The local Python assignments now pass except the visualization lab, which still depends on installing seaborn into its environment. I’m checking that dependency install path now so the B4 README is not just
+  theoretically correct.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• The sandboxed install failed because network access is blocked; with approved network access, matplotlib and seaborn are installing into B4’s local .venv. Once that finishes I’ll run the visualization script
+  too.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• Not fully before. Now it is much closer to “first-go executable on a suitable system.”
+
+  I updated the README instructions so they clearly match the three references: assignment list + DSBDAL.pdf + DSBDA MMCOE.pdf. Main fixes:
+
+  - Added root first-run readiness matrix in /mnt/c/Users/ADMIN/Desktop/new/DSBDA/README.md:23.
+  - Added proper python3 -m venv .venv + pip install -r requirements.txt steps for Python labs.
+  - Added HDFS cleanup commands for Hadoop reruns.
+  - Marked A3 Hive as needing Hive 2.x for CREATE INDEX, because newer Hive 3.x may reject that manual-era command: /mnt/c/Users/ADMIN/Desktop/new/DSBDA/group_a/03_hiveql_flight_info/README.md:15.
+  - Fixed B3 Hive table to skip the CSV header row: /mnt/c/Users/ADMIN/Desktop/new/DSBDA/group_b/03_python_hadoop_forest_fire/hive/forest_fire.hql:23.
+  - Fixed B4 README so it installs from requirements.txt: /mnt/c/Users/ADMIN/Desktop/new/DSBDA/group_b/04_visualization_matplotlib_seaborn/README.md:31.
+
+  Verified locally:
+
+  - Python syntax check: passed.
+  - B1 Facebook metrics: passed.
+  - B2 Air/Heart pipeline: passed.
+  - B3 mapper/reducer local run: passed.
+  - B4 visualization: dependencies installed and script passed, plots generated.
+  - B5 Tableau data prep: passed.
+  - C1 review scraper sample run: passed.
+  - C2 admissions ML: passed.
+
+  Caveat: I cannot honestly say Hadoop/Hive/Tableau were fully executed here because this environment does not have those services running. But the instructions are now suitable for a proper Ubuntu/Hadoop/
+  Hive/Tableau lab machine, and the scripts/data paths line up for first execution.
+
+
+› so this repo is final ? for direct execution?
+
+
+• Yes, for a suitable lab system, this repo is now final for direct execution.
+
+  Meaning:
+
+  - Python labs B1, B2, B3 local, B4, B5 data prep, C1, C2 are directly runnable with the README steps.
+  - Hadoop/Hive/Tableau labs are direct-execution ready only on a machine where Hadoop, Hive, and Tableau are already installed/configured.
+  - A3 Hive may need Hive 2.x for CREATE INDEX; on Hive 3.x, comment the two index lines as noted in the README.
+  - B5 still requires manual Tableau chart creation after running the prep script, because Tableau dashboards cannot be executed from Python alone.
+
+  So for tomorrow’s practical: yes, use this as the final repo. Just follow each assignment README in order.
+
+
+› ok /exit
+
+
+• Done.
+
+
+› okay now it is time for me to in detail learn each practical from start start 1 by 1
+
+
+• I’ll start with Practical 1 only, in baby steps, using the repo’s own assignment folder as the source. I’ll first re-open the A1 README/config files so the explanation follows your exact practical, not a
+  generic Hadoop install.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• We’ll start with Practical 1: Hadoop Installation and Configuration.
+
+  Goal for this practical: install Hadoop, configure it in single-node pseudo-distributed mode, start Hadoop services, and verify that the services are running.
+
+  1. What This Practical Is About
+
+  Hadoop is used for storing and processing very large data.
+
+  It has two main parts you must know first:
+
+  HDFS: Hadoop Distributed File System
+  Stores files in a distributed way.
+
+  YARN: Yet Another Resource Negotiator
+  Manages resources and runs processing jobs.
+
+  MapReduce: Processing model
+  Runs data processing tasks across Hadoop.
+
+  In this practical, we are not writing a MapReduce program yet. We are only setting up Hadoop so later practicals can run.
+
+  2. Practical 1 Folder
+
+  Your repo folder is:
+
+  group_a/01_hadoop_installation
+
+  It contains:
+
+  README.md
+  config/core-site.xml
+  config/hdfs-site.xml
+  config/mapred-site.xml
+  config/yarn-site.xml
+  scripts/verify_env.sh
+  scripts/verify_env.ps1
+
+  The important files are the four XML config files.
+
+  3. Required System
+
+  For direct execution, use:
+
+  Ubuntu 20.04 or later
+  Java JDK 8 or JDK 11
+  OpenSSH server/client
+  Hadoop 3.x
+  Minimum 4 GB RAM
+
+  Best practical environment: Ubuntu VM or native Ubuntu. WSL2 can work, but Hadoop service handling is easier in a VM.
+
+  4. Step Order
+
+  You must remember this exact order:
+
+  1. Install Java and SSH
+  2. Create Hadoop user
+  3. Configure passwordless SSH
+  4. Download and install Hadoop
+  5. Set environment variables
+  6. Copy XML config files
+  7. Format HDFS
+  8. Start Hadoop services
+  9. Verify using jps
+
+  5. Why Java Is Needed
+
+  Hadoop is written in Java.
+
+  So this command checks Java:
+
+  java -version
+
+  If Java is missing, Hadoop will not start.
+
+  Install it:
+
+  sudo apt-get update
+  sudo apt-get install openjdk-8-jdk openssh-server rsync -y
+
+  6. Why SSH Is Needed
+
+  Even in single-node mode, Hadoop talks to its own machine using SSH.
+
+  That is why we configure:
+
+  ssh localhost
+
+  If ssh localhost asks for a password every time, Hadoop startup scripts may fail.
+
+  7. Why We Create hduser
+
+  The manual uses a dedicated Hadoop user so Hadoop files and services are managed cleanly.
+
+  Commands:
+
+  sudo addgroup hadoop
+  sudo adduser --ingroup hadoop hduser
+  sudo adduser hduser sudo
+
+  Then switch to that user:
+
+  su - hduser
+
+  8. Passwordless SSH
+
+  Run as hduser:
+
+  ssh-keygen -t rsa -P ""
+  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+  ssh localhost
+
+  Expected: it should login without asking for a password after first confirmation.
+
+  9. Hadoop Install Location
+
+  Your README uses:
+
+  /usr/local/hadoop
+
+  Download and install:
+
+  wget https://archive.apache.org/dist/hadoop/core/hadoop-3.3.1/hadoop-3.3.1.tar.gz
+  tar -xvf hadoop-3.3.1.tar.gz
+  sudo mv hadoop-3.3.1 /usr/local/hadoop
+  sudo chown -R hduser:hadoop /usr/local/hadoop
+
+  10. Environment Variables
+
+  These tell the terminal where Hadoop is installed.
+
+  Add to ~/.bashrc:
+
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+  export HADOOP_HOME=/usr/local/hadoop
+  export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+  export HADOOP_MAPRED_HOME=$HADOOP_HOME
+  export HADOOP_COMMON_HOME=$HADOOP_HOME
+  export HADOOP_HDFS_HOME=$HADOOP_HOME
+  export YARN_HOME=$HADOOP_HOME
+
+  Then apply:
+
+  source ~/.bashrc
+
+  Check:
+
+  hadoop version
+
+  11. Config Files Meaning
+
+  Your repo has ready config files.
+
+  core-site.xml
+
+  <name>fs.defaultFS</name>
+  <value>hdfs://localhost:9000</value>
+
+  Meaning: HDFS NameNode runs on localhost at port 9000.
+
+  hdfs-site.xml
+
+  <name>dfs.replication</name>
+  <value>1</value>
+
+  Meaning: only one copy of each file because this is single-node mode.
+
+  mapred-site.xml
+
+  <name>mapreduce.framework.name</name>
+  <value>yarn</value>
+
+  Meaning: MapReduce jobs will run using YARN.
+
+  yarn-site.xml
+
+  <name>yarn.nodemanager.aux-services</name>
+  <value>mapreduce_shuffle</value>
+
+  Meaning: enables MapReduce shuffle service inside YARN.
+
+  12. Format HDFS
+
+  Run once only:
+
+  hdfs namenode -format
+
+  Important: do not repeatedly format after storing data, because formatting clears HDFS metadata.
+
+  13. Start Services
+
+  start-dfs.sh
+  start-yarn.sh
+
+  start-dfs.sh starts HDFS services.
+
+  Expected HDFS services:
+
+  NameNode
+  DataNode
+  SecondaryNameNode
+
+  start-yarn.sh starts YARN services.
+
+  Expected YARN services:
+
+  ResourceManager
+  NodeManager
+
+  14. Verify
+
+  Run:
+
+  jps
+
+  Expected output should include:
+
+  NameNode
+  DataNode
+  SecondaryNameNode
+  ResourceManager
+  NodeManager
+
+  If these appear, Practical 1 is successful.
+
+  15. Viva Points
+
+  Common questions:
+
+  What is Hadoop?
+  A framework for distributed storage and distributed processing of large data.
+
+  What is HDFS?
+  Hadoop Distributed File System. It stores files across nodes.
+
+  What is NameNode?
+  Master service of HDFS. It stores metadata of files and blocks.
+
+  What is DataNode?
+  Worker service that stores actual data blocks.
+
+  What is YARN?
+  Resource management layer of Hadoop.
+
+  What is ResourceManager?
+  Master service of YARN. It manages cluster resources.
+
+  What is NodeManager?
+  Worker service of YARN. It runs tasks on a node.
+
+  What is pseudo-distributed mode?
+  Single machine runs all Hadoop daemons, but Hadoop behaves like a distributed system.
+
+  Why replication factor is 1?
+  Because this setup has only one node.
+
+  Next, say next and I’ll teach Practical 2: Java MapReduce Log Analysis in the same step-by-step way.
+
+
+› hey hey hey this is not the steuture i wanted, first give me title of the practical then a brief executive summary of what is expected to be done and what concepts are in this pra tical. then theory
+  explaination detailed of the concepts in the practical, then practical stepwise with commands if any or reference in code files
+
+
+• Got it. We’ll use this structure from now onward.
+
+  # Practical 1: Hadoop Installation and Configuration
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to install and configure Hadoop on a suitable Linux system.
+
+  The practical mainly covers:
+
+  - Hadoop installation
+  - Single-node / pseudo-distributed Hadoop setup
+  - Basic idea of multi-node Hadoop setup
+  - HDFS configuration
+  - YARN configuration
+  - Starting Hadoop daemons
+  - Verifying Hadoop services using jps
+
+  At the end, you should be able to show that Hadoop is correctly installed and running with these services:
+
+  NameNode
+  DataNode
+  SecondaryNameNode
+  ResourceManager
+  NodeManager
+
+  Repo folder:
+
+  group_a/01_hadoop_installation
+
+  Important reference files:
+
+  group_a/01_hadoop_installation/README.md
+  group_a/01_hadoop_installation/config/core-site.xml
+  group_a/01_hadoop_installation/config/hdfs-site.xml
+  group_a/01_hadoop_installation/config/mapred-site.xml
+  group_a/01_hadoop_installation/config/yarn-site.xml
+
+  ## 2. Theory Explanation
+
+  ### What Is Hadoop?
+
+  Hadoop is an open-source framework used to store and process very large datasets.
+
+  It is useful when data is too large for a single machine or traditional database system.
+
+  Hadoop mainly provides:
+
+  - Distributed storage
+  - Distributed processing
+  - Fault tolerance
+  - Scalability
+
+  ### Main Hadoop Components
+
+  #### HDFS
+
+  HDFS stands for Hadoop Distributed File System.
+
+  It stores large files by dividing them into blocks. In a real cluster, these blocks are stored across multiple machines.
+
+  Important HDFS daemons:
+
+  NameNode
+  DataNode
+  SecondaryNameNode
+
+  #### NameNode
+
+  NameNode is the master of HDFS.
+
+  It stores metadata, such as:
+
+  - File names
+  - Directory structure
+  - Block locations
+  - Permissions
+
+  It does not store the actual file data.
+
+  #### DataNode
+
+  DataNode stores the actual data blocks.
+
+  In a real cluster, multiple DataNodes store different parts of files.
+
+  In this practical, since we use single-node mode, the same machine acts as both NameNode and DataNode.
+
+  #### SecondaryNameNode
+
+  SecondaryNameNode helps the NameNode by periodically merging metadata checkpoints.
+
+  It is not a backup NameNode.
+
+  ### YARN
+
+  YARN stands for Yet Another Resource Negotiator.
+
+  It manages resources and runs applications in Hadoop.
+
+  Important YARN daemons:
+
+  ResourceManager
+  NodeManager
+
+  #### ResourceManager
+
+  ResourceManager is the master service of YARN.
+
+  It manages cluster resources and decides where jobs should run.
+
+  #### NodeManager
+
+  NodeManager runs on worker nodes.
+
+  It manages resources on that node and reports to ResourceManager.
+
+  ### MapReduce
+
+  MapReduce is Hadoop’s processing model.
+
+  It has two main phases:
+
+  Map
+  Reduce
+
+  In Practical 1, we do not write a MapReduce program. But we configure Hadoop so MapReduce jobs can run in later practicals.
+
+  ### Pseudo-Distributed Mode
+
+  Pseudo-distributed mode means Hadoop runs on a single machine, but all Hadoop daemons run separately.
+
+  So one machine runs:
+
+  NameNode
+  DataNode
+  SecondaryNameNode
+  ResourceManager
+  NodeManager
+
+  This is used for learning and lab practicals.
+
+  ### Multi-Node Mode
+
+  Multi-node mode means Hadoop runs on multiple machines.
+
+  Usually:
+
+  One master node
+  Multiple worker/slave nodes
+
+  The master runs services like NameNode and ResourceManager.
+
+  Workers run DataNode and NodeManager.
+
+  ## 3. Practical Steps With Commands
+
+  ### Step 1: Install Java and SSH
+
+  Hadoop needs Java because Hadoop is written in Java.
+
+  sudo apt-get update
+  sudo apt-get install openjdk-8-jdk openssh-server rsync -y
+
+  Check Java:
+
+  java -version
+
+  Expected: Java version should be displayed.
+
+  ### Step 2: Create Hadoop User
+
+  Create a separate Hadoop user:
+
+  sudo addgroup hadoop
+  sudo adduser --ingroup hadoop hduser
+  sudo adduser hduser sudo
+
+  Switch to Hadoop user:
+
+  su - hduser
+
+  ### Step 3: Configure Passwordless SSH
+
+  Hadoop uses SSH to start services, even on localhost.
+
+  ssh-keygen -t rsa -P ""
+  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+  ssh localhost
+
+  Expected: after first confirmation, SSH should work without asking password repeatedly.
+
+  ### Step 4: Download and Install Hadoop
+
+  wget https://archive.apache.org/dist/hadoop/core/hadoop-3.3.1/hadoop-3.3.1.tar.gz
+  tar -xvf hadoop-3.3.1.tar.gz
+  sudo mv hadoop-3.3.1 /usr/local/hadoop
+  sudo chown -R hduser:hadoop /usr/local/hadoop
+
+  ### Step 5: Set Environment Variables
+
+  Edit ~/.bashrc and add:
+
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+  export HADOOP_HOME=/usr/local/hadoop
+  export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+  export HADOOP_MAPRED_HOME=$HADOOP_HOME
+  export HADOOP_COMMON_HOME=$HADOOP_HOME
+  export HADOOP_HDFS_HOME=$HADOOP_HOME
+  export YARN_HOME=$HADOOP_HOME
+
+  Apply changes:
+
+  source ~/.bashrc
+
+  Check Hadoop:
+
+  hadoop version
+
+  ### Step 6: Configure Hadoop XML Files
+
+  Your repo already provides config files here:
+
+  group_a/01_hadoop_installation/config/
+
+  Copy these into:
+
+  /usr/local/hadoop/etc/hadoop/
+
+  Files:
+
+  core-site.xml
+  hdfs-site.xml
+  mapred-site.xml
+  yarn-site.xml
+
+  #### core-site.xml
+
+  Purpose: tells Hadoop where HDFS runs.
+
+  Important setting:
+
+  <name>fs.defaultFS</name>
+  <value>hdfs://localhost:9000</value>
+
+  #### hdfs-site.xml
+
+  Purpose: configures HDFS storage.
+
+  Important setting:
+
+  <name>dfs.replication</name>
+  <value>1</value>
+
+  Replication is 1 because we are using one machine.
+
+  #### mapred-site.xml
+
+  Purpose: tells Hadoop to run MapReduce on YARN.
+
+  <name>mapreduce.framework.name</name>
+  <value>yarn</value>
+
+  #### yarn-site.xml
+
+  Purpose: configures YARN services.
+
+  <name>yarn.nodemanager.aux-services</name>
+  <value>mapreduce_shuffle</value>
+
+  ### Step 7: Format HDFS
+
+  Run this only once before first use:
+
+  hdfs namenode -format
+
+  Do not run this repeatedly after storing data.
+
+  ### Step 8: Start Hadoop Services
+
+  Start HDFS:
+
+  start-dfs.sh
+
+  Start YARN:
+
+  start-yarn.sh
+
+  ### Step 9: Verify Services
+
+  Run:
+
+  jps
+
+  NameNode
+  DataNode
+
+  If all these are visible, the practical is successful.
+
+  ## 4. Code / File References
+
+  Main README:
+
+  group_a/01_hadoop_installation/README.md
+
+  Config files:
+
+  group_a/01_hadoop_installation/config/core-site.xml
+  group_a/01_hadoop_installation/config/hdfs-site.xml
+  group_a/01_hadoop_installation/config/mapred-site.xml
+  group_a/01_hadoop_installation/config/yarn-site.xml
+
+  Optional verification scripts:
+
+  group_a/01_hadoop_installation/scripts/verify_env.sh
+  group_a/01_hadoop_installation/scripts/verify_env.ps1
+
+  ## 5. Final Expected Output
+
+  The final proof for this practical is:
+
+  jps
+
+  Expected services:
+
+  NameNode
+  DataNode
+  SecondaryNameNode
+  ResourceManager
+  NodeManager
+
+  That is the practical completion evidence.
+
+  When you say next, I’ll explain Practical 2: Java MapReduce Log Analysis in this same structure.
+
+
+› Next
+
+
+• I’ll move to Practical 2 and anchor it to the actual Java driver and sample log file in your repo, so the theory connects directly to what the code does.
+
+• Explored
+  └ Read README.md, LogDurationDriver.java, sample_log.csv
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• # Practical 2: Java MapReduce Log Analysis
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to write and run a Java MapReduce program on Hadoop.
+
+  The program processes a system log file and finds:
+
+  1. Total logged-in time for each user
+  2. User who has logged in for the maximum total time
+
+  Repo folder:
+
+  group_a/02_mapreduce_log_analysis
+
+  Important files:
+
+  group_a/02_mapreduce_log_analysis/README.md
+  group_a/02_mapreduce_log_analysis/src/LogDurationDriver.java
+  group_a/02_mapreduce_log_analysis/data/sample_log.csv
+
+  Input file:
+
+  data/sample_log.csv
+
+  Input columns:
+
+  user,start,end
+
+  Example:
+
+  alice,2024-01-01 09:00:00,2024-01-01 12:30:00
+
+  Expected final answer from sample data:
+
+  chris    15000
+
+  Meaning: chris has maximum total login time, which is 15000 seconds.
+
+  ## 2. Theory Explanation
+
+  ### What Is MapReduce?
+
+  MapReduce is a programming model used in Hadoop for processing large datasets.
+
+  It has two main phases:
+
+  Map phase
+  Reduce phase
+
+  The input data is divided and processed in parallel by mappers. Then reducers combine the mapper outputs and produce final results.
+
+  ### What Is Mapper?
+
+  Mapper reads input records one by one.
+
+  In this practical, each input row is a login record:
+
+  user,start,end
+
+  Mapper calculates login duration for each row.
+
+  Example:
+
+  alice,2024-01-01 09:00:00,2024-01-01 12:30:00
+
+  Duration:
+
+  09:00 to 12:30 = 3 hours 30 minutes = 12600 seconds
+
+  Mapper output:
+
+  alice    12600
+
+  So mapper converts raw log entries into key-value pairs.
+
+  Key:
+
+  username
+
+  Value:
+
+  login duration in seconds
+
+  ### What Is Reducer?
+
+  Reducer groups values by key.
+
+  If mapper outputs:
+
+  alice    12600
+  alice    4500
+  bob      2700
+  bob      16800
+
+  Reducer receives:
+
+  alice -> [12600, 4500]
+  bob   -> [2700, 16800]
+
+  Then reducer sums the values:
+
+  alice    17100
+  bob      19500
+
+  ### What Is Key-Value Pair?
+
+  MapReduce works on key-value pairs.
+
+  In this practical:
+
+  First MapReduce job:
+
+  Input key: byte offset
+  Input value: log line
+  Output key: username
+  Output value: duration in seconds
+
+  Second MapReduce job:
+
+  Input key: byte offset
+  Input value: user total
+  Output key: max
+  Output value: user,total
+
+  Final output:
+
+  username    maximum_total_duration
+
+  ### Why Two MapReduce Jobs Are Used?
+
+  This practical has two tasks:
+
+  1. Find total duration for each user
+  2. Find maximum among all user totals
+
+  The first job calculates totals per user.
+
+  The second job reads those totals and finds the maximum user.
+
+  This is called job chaining, because output of Job 1 becomes input of Job 2.
+
+  ### What Is HDFS Input and Output?
+
+  Hadoop does not directly process local files in normal execution.
+
+  We upload the input file to HDFS:
+
+  hdfs dfs -put data/sample_log.csv /input/log_analysis/
+
+  Then Hadoop reads from HDFS and writes output back to HDFS.
+
+  Output folders:
+
+  /output/totals
+  /output/max_user
+
+  ## 3. Practical Steps With Commands
+
+  ### Step 1: Start Hadoop Services
+
+  Make sure Practical 1 setup is working.
+
+  start-dfs.sh
+  start-yarn.sh
+  jps
+
+  Expected services:
+
+  NameNode
+  DataNode
+  SecondaryNameNode
+  ResourceManager
+  NodeManager
+
+  ### Step 2: Go to Practical Folder
+
+  cd group_a/02_mapreduce_log_analysis
+
+  ### Step 3: Compile Java Code
+
+  The Java file is:
+
+  src/LogDurationDriver.java
+
+  Compile it using Hadoop classpath:
+
+  export HADOOP_CLASSPATH=$(hadoop classpath)
+  mkdir -p build
+  javac -classpath "$HADOOP_CLASSPATH" -d build src/LogDurationDriver.java
+
+  This creates compiled .class files inside:
+
+  build/
+
+  ### Step 4: Create JAR File
+
+  Hadoop runs Java MapReduce code using a JAR file.
+
+  jar -cvf log-analysis.jar -C build/ .
+
+  This creates:
+
+  log-analysis.jar
+
+  ### Step 5: Upload Input File to HDFS
+
+  Create input folder:
+
+  hdfs dfs -mkdir -p /input/log_analysis
+
+  Remove old copy if it exists:
+
+  hdfs dfs -rm -f /input/log_analysis/sample_log.csv
+
+  Upload sample log:
+
+  hdfs dfs -put data/sample_log.csv /input/log_analysis/
+
+  Check uploaded file:
+
+  hdfs dfs -ls /input/log_analysis
+
+  ### Step 6: Remove Old Output Folders
+
+  Hadoop fails if output folder already exists.
+
+  So before running again:
+
+  hdfs dfs -rm -r -f /output/totals /output/max_user
+
+  ### Step 7: Run MapReduce Program
+
+  hadoop jar log-analysis.jar LogDurationDriver /input/log_analysis /output/totals /output/max_user
+
+  Arguments meaning:
+
+  /input/log_analysis   input folder
+  /output/totals        output of first job
+  /output/max_user      output of second job
+
+  ### Step 8: View Total Time Per User
+
+  hdfs dfs -cat /output/totals/part-r-00000
+
+  Expected style:
+
+  alice    17100
+  bob      19500
+  chris    15000
+  dina     6000
+
+  Exact order may vary.
+
+  ### Step 9: View User With Maximum Login Time
+
+  hdfs dfs -cat /output/max_user/part-r-00000
+
+  Expected sample output:
+
+  bob    19500
+
+  Note: Your README says chris 15000, but from the current sample data, bob has 2700 + 16800 = 19500, which is higher than chris = 15000. So the README expected output looks incorrect for the current CSV.
+
+  ## 4. Code Explanation With File Reference
+
+  Main code file:
+
+  group_a/02_mapreduce_log_analysis/src/LogDurationDriver.java
+
+  ### Main Class
+
+  public class LogDurationDriver extends Configured implements Tool
+
+  This is the main Hadoop driver class.
+
+  It configures and runs both MapReduce jobs.
+
+  ### First Mapper: DurationMapper
+
+  Code section:
+
+  public static class DurationMapper extends Mapper<LongWritable, Text, Text, LongWritable>
+
+  Purpose:
+
+  - Reads each CSV row
+  - Skips header row
+  - Extracts user, start, end
+  - Calculates duration in seconds
+  - Emits username and duration
+
+  Important line:
+
+  long durationSeconds = (end.getTime() - start.getTime()) / 1000L;
+
+  This converts milliseconds to seconds.
+
+  Mapper output example:
+
+  alice    12600
+
+  ### First Reducer: DurationReducer
+
+  Code section:
+
+  public static class DurationReducer extends Reducer<Text, LongWritable, Text, LongWritable>
+
+  Purpose:
+
+  - Receives all durations for one user
+  - Adds them
+  - Outputs total login time
+
+  Important logic:
+
+  long sum = 0L;
+  for (LongWritable v : values) {
+    sum += v.get();
+  }
+
+  Reducer output:
+
+  alice    17100
+
+  ### Second Mapper: MaxMapper
+
+  Code section:
+
+  public static class MaxMapper extends Mapper<LongWritable, Text, Text, Text>
+
+  Purpose:
+
+  - Reads output of Job 1
+  - Sends every user total under same key max
+
+  Important line:
+
+  private final Text outKey = new Text("max");
+
+  Why same key?
+
+  Because all records must go to one reducer so global maximum can be found.
+
+  ### Second Reducer: MaxReducer
+
+  Code section:
+
+  public static class MaxReducer extends Reducer<Text, Text, Text, LongWritable>
+
+  Purpose:
+
+  - Compares all user totals
+  - Finds maximum total
+  - Outputs user with maximum duration
+
+  Important logic:
+
+  if (total > max) {
+    max = total;
+    users.clear();
+    users.add(user);
+  }
+
+  It also handles ties:
+
+  else if (total == max) {
+    users.add(user);
+  }
+
+  So if two users have the same maximum duration, both are printed.
+
+  ### Driver Logic
+
+  Inside:
+
+  public int run(String[] args)
+
+  The program expects 3 arguments:
+
+  <input> <totalsOutput> <maxOutput>
+
+  If not provided:
+
+  System.err.println("Usage: LogDurationDriver <input> <totalsOutput> <maxOutput>");
+
+  Then it creates:
+
+  Job 1: log-duration-totals
+  Job 2: log-duration-max
+
+  Job 2 only runs if Job 1 succeeds.
+
+  ## 5. Final Expected Output
+
+  For the current sample file:
+
+  Expected:
+  Because:
+
+  bob = 45 minutes + 4 hours 40 minutes
+  bob = 2700 + 16800
+  bob = 19500 seconds
+
+  ## 6. Important Viva Questions
+
+  What is MapReduce?
+  A Hadoop programming model for processing large data using Map and Reduce phases.
+
+  What is Mapper?
+  It processes input records and emits intermediate key-value pairs.
+
+  What is Reducer?
+  It groups mapper outputs by key and produces final result.
+
+  Why are two jobs used?
+  First job calculates total login time per user. Second job finds maximum among those totals.
+
+  What is job chaining?
+  Using output of one MapReduce job as input to another job.
+
+  Why is HDFS used?
+  Hadoop MapReduce reads input from HDFS and writes output to HDFS.
+
+  Why remove output folders before running?
+  Hadoop does not overwrite existing output directories.
+
+  What is LongWritable?
+  Hadoop’s serializable wrapper for Java long.
+
+  What is Text?
+  Hadoop’s serializable wrapper for string data.
+
+  Say next and I’ll explain Practical 3: HiveQL Flight Information System in the same structure.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+› next
+
+
+• I’ll cover Practical 3 now and tie it directly to flight_info.hql and the two sample CSV files, since this practical is mainly about Hive table operations and queries.
+
+• Explored
+  └ Read flight_info.hql, README.md, flight_2008_sample.csv, airports_sample.csv
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• # Practical 3: HiveQL Flight Information System
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to create a Flight Information System using HiveQL.
+
+  You will use Hive to perform database and table operations on flight data.
+
+  This practical covers:
+
+  - Creating a Hive database
+  - Creating internal Hive tables
+  - Creating external Hive tables
+  - Loading CSV data into Hive tables
+  - Altering tables
+  - Inserting records
+  - Joining tables
+  - Creating indexes
+  - Running aggregate queries
+  - Finding average departure delay per day in 2008
+
+  Repo folder:
+
+  group_a/03_hiveql_flight_info
+
+  Important files:
+
+  group_a/03_hiveql_flight_info/README.md
+  group_a/03_hiveql_flight_info/flight_info.hql
+  group_a/03_hiveql_flight_info/data/flight_2008_sample.csv
+  group_a/03_hiveql_flight_info/data/airports_sample.csv
+
+  Main script:
+
+  flight_info.hql
+
+  This is not a Python or Java program. It is a HiveQL script.
+
+  You run it using:
+
+  hive -f flight_info.hql
+
+  ## 2. Theory Explanation
+
+  ### What Is Hive?
+
+  Hive is a data warehouse tool built on top of Hadoop.
+
+  It allows us to query large datasets stored in HDFS using SQL-like syntax.
+
+  Hive query language is called:
+
+  HiveQL
+
+  Hive is useful because writing Java MapReduce programs manually is lengthy. Hive converts SQL-like queries into execution jobs internally.
+
+  ### Why Hive Is Used?
+
+  Without Hive, we may need to write Java MapReduce code for operations like:
+
+  - Filtering data
+  - Grouping data
+  - Joining data
+  - Aggregating values
+  - Calculating averages
+
+  With Hive, we can write:
+
+  SELECT origin, AVG(depdelay)
+  FROM flights
+  GROUP BY origin;
+
+  So Hive makes big data analysis easier for people who know SQL.
+
+  ### What Is Hive Database?
+
+  A Hive database is a logical container for tables.
+
+  In this practical:
+
+  CREATE DATABASE IF NOT EXISTS flight_db;
+  USE flight_db;
+
+  This creates and selects the database named:
+
+  flight_db
+
+  ### What Is Hive Table?
+
+  A Hive table defines structure for data.
+
+  For example, flight data has columns like:
+
+  year
+  month
+  dayofmonth
+  dayofweek
+  depdelay
+  origin
+  dest
+  flightnum
+
+  Hive needs this schema so it can understand the CSV file.
+
+  ### Internal Table
+
+  An internal table is fully managed by Hive.
+
+  In this practical:
+
+  CREATE TABLE flights (...)
+
+  This creates an internal table.
+
+  For internal tables, Hive manages both:
+
+  metadata
+  data
+
+  If we drop an internal table, Hive may remove its stored data also.
+
+  ### External Table
+
+  An external table points to data stored at an external HDFS location.
+
+  In this practical:
+
+  CREATE EXTERNAL TABLE airports (...)
+  LOCATION '/user/hive/warehouse/airports_ext';
+
+  This means Hive table metadata is created, but the data location is explicitly given.
+
+  External tables are useful when data is shared with other tools or should not be deleted automatically when table metadata is dropped.
+
+  ### Difference Between Internal and External Table
+
+  Internal table:
+
+  Hive owns metadata and data.
+  Dropping table can remove data.
+
+  External table:
+
+  Hive owns metadata only.
+  Data is stored at specified location.
+  Dropping table usually does not remove original data.
+
+  ### What Is LOAD DATA LOCAL INPATH?
+
+  This command loads data from local filesystem into Hive table.
+
+  Example:
+
+  LOAD DATA LOCAL INPATH 'data/flight_2008_sample.csv' INTO TABLE flights;
+
+  Meaning:
+
+  Take local CSV file and load it into Hive table.
+
+  LOCAL means the file is on the local machine, not already in HDFS.
+
+  ### What Is ALTER TABLE?
+
+  ALTER TABLE changes an existing table structure.
+
+  In this practical:
+
+  ALTER TABLE flights ADD COLUMNS (carrier STRING);
+
+  This adds a new column:
+
+  carrier
+
+  ### What Is INSERT INTO?
+
+  INSERT INTO adds a new row into the table.
+
+  In this practical:
+
+  INSERT INTO TABLE flights VALUES
+  (2008,1,3,4,5.0,'SFO','LAX','UA123','UA');
+
+  This inserts one new flight record with carrier UA.
+
+  ### What Is Join?
+
+  A join combines rows from two tables using a common column.
+
+  Here we have:
+
+  flights.origin
+
+  SFO
+  LAX
+  JFK
+
+  airports.iata
+
+  SFO
+  LAX
+  JFK
+
+  So we join:
+
+  JOIN airports a ON f.origin = a.iata
+
+  This allows us to show flight number, origin airport code, and city name.
+
+  ### What Is Index in Hive?
+
+  An index is used to improve query performance on a column.
+
+  In this practical:
+
+  CREATE INDEX flights_origin_idx ON TABLE flights(origin)
+  AS 'COMPACT' WITH DEFERRED REBUILD;
+
+  This creates an index on:
+
+  origin
+
+  Important note: Hive indexes are old Hive features. They work in Hive 2.x, but newer Hive 3.x versions may not support them.
+
+  If Hive gives an index-related error, comment these two lines:
+
+  CREATE INDEX flights_origin_idx ON TABLE flights(origin)
+  AS 'COMPACT' WITH DEFERRED REBUILD;
+
+  ALTER INDEX flights_origin_idx ON flights REBUILD;
+
+  Then explain in viva that Hive indexing was removed in newer versions.
+
+  ### What Is Aggregation?
+
+  Aggregation means calculating summary values.
+
+  Examples:
+
+  AVG
+  SUM
+  COUNT
+  MIN
+  MAX
+
+  In this practical, we calculate average departure delay:
+
+  AVG(depdelay)
+
+  ### What Is GROUP BY?
+
+  GROUP BY groups rows based on columns.
+
+  Here:
+
+  GROUP BY year, month, dayofmonth
+
+  This groups all flights by date and calculates average delay for each date.
+
+  ## 3. Practical Steps With Commands
+
+  ### Step 1: Start Hadoop Services
+
+  Hive runs on top of Hadoop, so start Hadoop first:
+
+  start-dfs.sh
+  start-yarn.sh
+  jps
+
+  Expected services:
+
+  NameNode
+  DataNode
+  SecondaryNameNode
+  ResourceManager
+  NodeManager
+
+  ### Step 2: Go to Practical Folder
+
+  cd group_a/03_hiveql_flight_info
+
+  ### Step 3: Initialize Hive Metastore
+
+  Run this only if Hive metastore is not initialized:
+
+  schematool -initSchema -dbType derby
+
+  If it is already initialized, do not run it again.
+
+  ### Step 4: Run Hive Script
+
+  hive -f flight_info.hql
+
+  This executes every HiveQL command inside:
+
+  flight_info.hql
+
+  ### Step 5: Expected Output
+
+  The script should show:
+
+  - Database created or already exists
+  - Tables dropped and recreated
+  - Data loaded successfully
+  - Join query result
+  - Average departure delay query result
+
+  ## 4. Code / Script Explanation With File Reference
+
+  Main script:
+
+  group_a/03_hiveql_flight_info/flight_info.hql
+
+  ### Create Database
+
+  CREATE DATABASE IF NOT EXISTS flight_db;
+  USE flight_db;
+
+  This creates and selects the database.
+
+  ### Drop Old Flights Table
+
+  DROP TABLE IF EXISTS flights;
+
+  This removes old flights table if it exists.
+
+  Useful because rerunning the script will not fail.
+
+  ### Create Flights Table
+
+  CREATE TABLE flights (
+    year INT,
+    month INT,
+    dayofmonth INT,
+    dayofweek INT,
+    depdelay DOUBLE,
+    origin STRING,
+    dest STRING,
+    flightnum STRING
+  )
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY ','
+  STORED AS TEXTFILE;
+
+  This table stores flight records.
+
+  Columns:
+
+  year         flight year
+  month        flight month
+  dayofmonth   day of month
+  dayofweek    day of week
+  depdelay     departure delay
+  origin       source airport code
+  dest         destination airport code
+  flightnum    flight number
+
+  Input file:
+
+  data/flight_2008_sample.csv
+
+  Example row:
+
+  2008,1,1,2,5.0,SFO,LAX,UA123
+
+  ### Create Airports External Table
+
+  CREATE EXTERNAL TABLE airports (
+    iata STRING,
+    name STRING,
+    city STRING,
+    state STRING
+  )
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY ','
+  STORED AS TEXTFILE
+  LOCATION '/user/hive/warehouse/airports_ext';
+
+  This table stores airport details.
+
+  Input file:
+
+  data/airports_sample.csv
+
+  Example row:
+
+  SFO,San Francisco Intl,San Francisco,CA
+
+  Columns:
+
+  iata    airport code
+  name    airport name
+  city    airport city
+  state   airport state
+
+  ### Load Flight Data
+
+  LOAD DATA LOCAL INPATH 'data/flight_2008_sample.csv' INTO TABLE flights;
+
+  This loads local flight CSV into Hive table flights.
+
+  ### Load Airport Data
+
+  LOAD DATA LOCAL INPATH 'data/airports_sample.csv' INTO TABLE airports;
+
+  This loads local airport CSV into Hive table airports.
+
+  ### Add New Column
+
+  ALTER TABLE flights ADD COLUMNS (carrier STRING);
+
+  This adds a new column named:
+
+  carrier
+
+  ### Insert New Row
+
+  INSERT INTO TABLE flights VALUES
+  (2008,1,3,4,5.0,'SFO','LAX','UA123','UA');
+
+  This adds a new flight record after the carrier column is added.
+
+  ### Join Query
+
+  SELECT f.flightnum, f.origin, a.city
+  FROM flights f
+  JOIN airports a ON f.origin = a.iata
+  LIMIT 10;
+
+  This joins flights with airports.
+
+  Purpose:
+
+  Show flight number, origin code, and origin city.
+
+  Example result style:
+
+  UA123    SFO    San Francisco
+  UA456    LAX    Los Angeles
+
+  ### Create Index
+
+  CREATE INDEX flights_origin_idx ON TABLE flights(origin)
+  AS 'COMPACT' WITH DEFERRED REBUILD;
+
+  This creates an index on the origin column.
+
+  ### Rebuild Index
+
+  ALTER INDEX flights_origin_idx ON flights REBUILD;
+
+  This builds the index data.
+
+  ### Average Departure Delay Query
+
+  SELECT year, month, dayofmonth, AVG(depdelay) AS avg_depdelay
+  FROM flights
+  WHERE year = 2008
+  GROUP BY year, month, dayofmonth
+  ORDER BY year, month, dayofmonth;
+
+  This calculates average departure delay per day in 2008.
+
+  For example, if January 1 has two delays:
+
+  5.0 and -2.0
+
+  Average:
+
+  (5.0 + -2.0) / 2 = 1.5
+
+  So output style:
+
+  2008    1    1    1.5
+
+  ## 5. Final Expected Output
+
+  The important final query is:
+
+  SELECT year, month, dayofmonth, AVG(depdelay) AS avg_depdelay
+  FROM flights
+  WHERE year = 2008
+  GROUP BY year, month, dayofmonth
+  ORDER BY year, month, dayofmonth;
+
+  Expected result style:
+
+  2008    1    3    9.0
+  2008    1    4    6.0
+  ## 6. Important Viva Questions
+
+  What is Hive?
+  Hive is a data warehouse tool on Hadoop that allows SQL-like querying using HiveQL.
+
+  What is HiveQL?
+  HiveQL is Hive Query Language, similar to SQL.
+
+  Why use Hive instead of Java MapReduce?
+  Hive is easier for structured data analysis because queries can be written in SQL-like syntax.
+
+  What is an internal table?
+  A Hive-managed table where Hive controls metadata and data.
+
+  What is an external table?
+  A table where Hive stores metadata but data is located at an external path.
+
+  What is the difference between LOAD DATA LOCAL INPATH and LOAD DATA INPATH?
+  LOCAL loads data from local filesystem. Without LOCAL, Hive expects data from HDFS.
+
+  What is ALTER TABLE used for?
+  To modify an existing table structure.
+
+  What is a join?
+  A join combines rows from two tables using a common column.
+
+  What is GROUP BY?
+  It groups rows so aggregate functions like AVG, SUM, or COUNT can be applied.
+
+  What is the purpose of index?
+  An index can improve query performance on selected columns.
+
+  Why might index fail in newer Hive?
+  Hive indexing is an older feature and is not supported in some newer Hive versions.
+
+  Say next and I’ll explain Practical 4: Facebook Metrics Operations using Python Pandas in the same structure.
+
+─ Worked for 1m 06s ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+› next, please elaborate explaination. currect is good, but little more will help, do not overdo it
+
+
+• I’ll do Practical 4 with the same structure, but a bit more explanatory around the Pandas operations so you can understand what each output file proves.
+
+• Explored
+  └ Read facebook_metrics_ops.py, README.md, facebook_metrics_secondary_sample.csv, facebook_metrics_sample.csv
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• # Practical 4: Facebook Metrics Operations Using Python Pandas
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to perform basic data manipulation operations on a Facebook metrics dataset using Python.
+
+  This practical covers:
+
+  - Loading CSV data
+  - Creating data subsets
+  - Merging two datasets
+  - Sorting data
+  - Transposing data
+  - Reshaping data using melt
+  - Reshaping data using pivot_table
+  - Saving processed outputs as CSV files
+
+  Repo folder:
+
+  group_b/01_facebook_metrics_ops
+
+  Important files:
+
+  group_b/01_facebook_metrics_ops/facebook_metrics_ops.py
+  group_b/01_facebook_metrics_ops/data/facebook_metrics_sample.csv
+  group_b/01_facebook_metrics_ops/data/facebook_metrics_secondary_sample.csv
+  group_b/01_facebook_metrics_ops/requirements.txt
+
+  Main script:
+
+  facebook_metrics_ops.py
+
+  The script creates these output files:
+
+  outputs/subset_cols.csv
+  outputs/subset_rows.csv
+  outputs/merged.csv
+  outputs/sorted.csv
+  outputs/transposed.csv
+  outputs/reshaped.csv
+  outputs/cast_wide.csv
+
+  ## 2. Theory Explanation
+
+  ### What Is Pandas?
+
+  Pandas is a Python library used for data analysis and data manipulation.
+
+  It provides two important data structures:
+
+  Series
+  DataFrame
+
+  ### What Is a DataFrame?
+
+  A DataFrame is a table-like structure in Pandas.
+
+  It has rows and columns, similar to an Excel sheet or SQL table.
+
+  Example:
+
+  Page total likes | Type   | Post Month | Lifetime Post Total Reach
+  12000            | Photo  | 1          | 5600
+  12500            | Status | 1          | 2100
+
+  In this practical, the Facebook metrics CSV is loaded as a DataFrame.
+
+  ### Dataset Used
+
+  Primary dataset:
+
+  data/facebook_metrics_sample.csv
+
+  Columns include:
+
+  Page total likes
+  Type
+  Post Month
+  Post Weekday
+  Post Hour
+  Lifetime Post Total Reach
+  Lifetime Engaged Users
+
+  Secondary dataset:
+
+  data/facebook_metrics_secondary_sample.csv
+
+  Columns:
+
+  Post Month
+  Campaign
+
+  The secondary dataset is used to demonstrate merging.
+
+  ### What Is Subsetting?
+
+  Subsetting means selecting a smaller part of the dataset.
+
+  There are two common types:
+
+  Column subset
+  Row subset
+
+  Column subset means selecting only specific columns.
+
+  Example:
+
+  df[["Page total likes", "Type"]]
+
+  Row subset means selecting rows that satisfy a condition.
+
+  Example:
+
+  df[df["Type"] == "Photo"]
+
+  In this practical:
+
+  - subset_cols.csv stores selected columns
+  - subset_rows.csv stores only rows where post type is Photo
+
+  ### What Is Merging?
+
+  Merging means combining two datasets using a common column.
+
+  Here, both datasets have:
+
+  Post Month
+
+  Primary dataset has post performance details.
+
+  Secondary dataset has campaign names.
+
+  So we merge them using:
+
+  df.merge(df2, on="Post Month", how="left")
+
+  This adds campaign information to each Facebook post based on month.
+
+  ### What Is Left Join?
+
+  how="left" means keep all rows from the first dataset and add matching rows from the second dataset.
+
+  If no matching campaign exists, the new column will contain missing value.
+
+  So left join protects the main dataset from losing records.
+
+  ### What Is Sorting?
+
+  Sorting means arranging data in order.
+
+  In this practical, sorting is done by:
+
+  Page total likes
+  Post Month
+
+  Code:
+
+  df.sort_values(["Page total likes", "Post Month"], ascending=[False, True])
+
+  Meaning:
+
+  - Sort Page total likes in descending order
+  - If values are same, sort Post Month in ascending order
+
+  Output file:
+
+  sorted.csv
+
+  ### What Is Transposing?
+
+  Transposing means converting rows into columns and columns into rows.
+
+  In Pandas, it is done using:
+
+  .T
+
+  Example before transpose:
+
+  Post Month | Post Weekday | Lifetime Post Total Reach
+  1          | 2            | 5600
+  1          | 3            | 2100
+
+  After transpose, column names and row labels are flipped.
+
+  This is useful when you want to compare a few records vertically instead of horizontally.
+
+  Output file:
+
+  transposed.csv
+
+  ### What Is Reshaping?
+
+  Reshaping means changing the structure of data without changing the actual meaning of data.
+
+  This practical uses two reshaping operations:
+
+  melt
+  pivot_table
+
+  ### What Is Melt?
+
+  melt() converts wide data into long data.
+
+  Wide format example:
+
+  Type   | Post Month | Lifetime Post Total Reach | Lifetime Engaged Users
+  Photo  | 1          | 5600                      | 410
+
+  Long format after melt:
+
+  Type   | Post Month | metric                    | value
+  Photo  | 1          | Lifetime Post Total Reach | 5600
+  Photo  | 1          | Lifetime Engaged Users    | 410
+
+  Why is this useful?
+
+  Long format is often easier for:
+
+  - plotting
+  - grouping
+  - comparing multiple metrics
+  - feeding into analytics tools
+
+  Output file:
+
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to perform basic **data manipulation operations** on a Facebook metrics dataset using Python Pandas.
+
+  This practical covers:
+
+  - Loading CSV data
+  - Creating data subsets
+  - Merging two datasets
+  - Sorting data
+  - Transposing data
+  - Reshaping data using `melt`
+  - Reshaping data using `pivot_table`
+  - Saving processed outputs as CSV files
+
+  Repo folder:
+
+  ```bash
+  group_b/01_facebook_metrics_ops
+
+  Important files:
+
+  group_b/01_facebook_metrics_ops/facebook_metrics_ops.py
+  group_b/01_facebook_metrics_ops/data/facebook_metrics_sample.csv
+  group_b/01_facebook_metrics_ops/data/facebook_metrics_secondary_sample.csv
+  group_b/01_facebook_metrics_ops/requirements.txt
+
+  Main script:
+
+  facebook_metrics_ops.py
+
+  The script generates output files inside:
+
+  outputs/
+
+  ## 2. Theory Explanation
+
+  ### What Is Pandas?
+
+  Pandas is a Python library used for data analysis and data manipulation.
+
+  It is commonly used to work with tabular data like:
+
+  CSV files
+  Excel files
+  Database tables
+  Data frames
+
+  In this practical, the Facebook dataset is stored as a CSV file and loaded into a Pandas DataFrame.
+
+  ### What Is a DataFrame?
+
+  A DataFrame is a table-like data structure in Pandas.
+
+  It has:
+
+  rows
+  columns
+  indexes
+
+  Example from your dataset:
+
+  Page total likes,Type,Post Month,Post Weekday,Post Hour,Lifetime Post Total Reach,Lifetime Engaged Users
+  12000,Photo,1,2,14,5600,410
+
+  Here, columns are:
+
+  Page total likes
+  Type
+  Post Month
+  Post Weekday
+  Post Hour
+  Lifetime Post Total Reach
+  Lifetime Engaged Users
+
+  Each row represents one Facebook post and its metrics.
+
+  ### What Is Data Subsetting?
+
+  Subsetting means selecting only a part of the dataset.
+
+  There are two common types:
+
+  Column subset
+  Row subset
+
+  Column subset means selecting only required columns.
+
+  Example:
+
+  df[["Page total likes", "Type", "Post Month"]]
+
+  Row subset means selecting rows that match a condition.
+
+  Example:
+
+  df[df["Type"] == "Photo"]
+
+  This selects only posts whose type is Photo.
+
+  Subsetting is useful because real datasets have many columns, but analysis usually needs only selected information.
+
+  ### What Is Data Merging?
+
+  Merging means combining two datasets using a common column.
+
+  In this practical, the main dataset has:
+
+  Post Month
+
+  The secondary dataset also has:
+
+  Post Month
+  Campaign
+
+  So both datasets are merged using:
+
+  df.merge(df2, on="Post Month", how="left")
+
+  This adds campaign information to the Facebook metrics data.
+
+  For example:
+
+  Post Month 1 -> Winter campaign
+  Post Month 2 -> Spring campaign
+
+  ### What Is Sorting?
+
+  Sorting means arranging rows based on one or more columns.
+
+  In this practical, data is sorted using:
+
+  df.sort_values(["Page total likes", "Post Month"], ascending=[False, True])
+
+  This means:
+
+  1. Sort by Page total likes in descending order
+  2. If likes are same, sort by Post Month in ascending order
+
+  Sorting helps identify high-performing records or organize data for analysis.
+
+  ### What Is Transposing?
+
+  Transposing means converting rows into columns and columns into rows.
+
+  In Pandas:
+
+  .T
+
+  is used for transpose.
+
+  If original data looks like:
+
+  Post Month | Post Weekday | Reach
+  1          | 2            | 5600
+  2          | 6            | 7400
+
+  After transpose, rows and columns are flipped.
+
+  This is useful when we want to compare records horizontally or prepare data in a different reporting format.
+
+  ### What Is Reshaping?
+
+  Reshaping means changing the structure of data without changing the actual meaning of data.
+
+  This practical uses two reshaping operations:
+
+  melt
+  pivot_table
+
+  ### What Is Melt?
+
+  melt() converts wide-format data into long-format data.
+
+  Wide format means different metrics are stored in different columns.
+
+  Example:
+
+  Type   Post Month   Reach   Engaged Users
+  Photo  1            5600    410
+
+  Long format means metric names and values are stored in separate rows.
+
+  Example:
+
+  Type   Post Month   metric                      value
+  Photo  1            Lifetime Post Total Reach   5600
+  Photo  1            Lifetime Engaged Users      410
+
+  This is useful for plotting, grouping, and statistical analysis.
+
+  ### What Is Pivot Table?
+
+  pivot_table() converts long-format data back into summarized wide format.
+
+  It can also aggregate values using functions like:
+
+  mean
+  sum
+  count
+  max
+  min
+
+  In this practical:
+
+  aggfunc="mean"
+
+  is used.
+
+  So if multiple records have the same Type and Post Month, Pandas calculates the average metric value.
+
+  ## 3. Practical Steps With Commands
+
+  ### Step 1: Go to Practical Folder
+
+  cd group_b/01_facebook_metrics_ops
+
+  ### Step 2: Create Virtual Environment
+
+  python3 -m venv .venv
+
+  ### Step 3: Activate Virtual Environment
+
+  source .venv/bin/activate
+
+  ### Step 4: Install Dependencies
+
+  pip install -r requirements.txt
+
+  requirements.txt contains:
+
+  pandas
+
+  ### Step 5: Run the Script
+
+  python facebook_metrics_ops.py
+
+  Expected terminal messages:
+
+  Loading data...
+  Creating subsets...
+  Merging datasets...
+  Sorting data...
+  Transposing data...
+  Reshaping (Melting)...
+  Reshaping (Pivoting)...
+  Saving outputs...
+  Successfully saved 7 files to outputs
+
+  ### Step 6: Check Output Files
+
+  Generated files:
+
+  outputs/subset_cols.csv
+  outputs/subset_rows.csv
+  outputs/merged.csv
+  outputs/sorted.csv
+  outputs/transposed.csv
+  outputs/reshaped.csv
+  outputs/cast_wide.csv
+
+  Main code file:
+
+  group_b/01_facebook_metrics_ops/facebook_metrics_ops.py
+
+  ### Import Libraries
+
+  from pathlib import Path
+  import pandas as pd
+
+  Path is used to handle file paths.
+
+  pandas is used for data manipulation.
+
+  ### Define Folder Paths
+
+  BASE = Path(__file__).parent
+  DATA_DIR = BASE / "data"
+  OUT_DIR = BASE / "outputs"
+  OUT_DIR.mkdir(exist_ok=True)
+
+  Meaning:
+
+  BASE      current script folder
+  DATA_DIR  data folder
+  OUT_DIR   output folder
+
+  mkdir(exist_ok=True) creates the output folder if it does not exist.
+
+  ### Load Primary Dataset
+
+  def load_primary() -> pd.DataFrame:
+      primary = DATA_DIR / "facebook_metrics.csv"
+      sample = DATA_DIR / "facebook_metrics_sample.csv"
+      return pd.read_csv(primary if primary.exists() else sample)
+
+  This function first checks for:
+
+  data/facebook_metrics.csv
+
+  If the full dataset is not present, it uses:
+
+  data/facebook_metrics_sample.csv
+
+  So the practical runs even with sample data.
+
+  ### Load Secondary Dataset
+
+  df2 = pd.read_csv(DATA_DIR / "facebook_metrics_secondary_sample.csv")
+
+  This loads campaign data.
+
+  Sample secondary dataset:
+
+  Post Month,Campaign
+  1,Winter
+  2,Spring
+  3,Summer
+  4,Autumn
+
+  This is used for merge operation.
+
+  ### Create Column Subset
+
+  subset_cols = df[[
+      "Page total likes",
+      "Type",
+      "Post Month",
+      "Lifetime Post Total Reach"
+  ]]
+
+  This selects only four columns.
+
+  Output file:
+
+  outputs/subset_cols.csv
+
+  Purpose: prove that column subsetting is performed.
+
+  ### Create Row Subset
+
+  subset_rows = df[df["Type"] == "Photo"].head(5)
+
+  This selects only rows where:
+
+  Type = Photo
+
+  .head(5) keeps first five matching rows.
+
+  Output file:
+
+  outputs/subset_rows.csv
+
+  Purpose: prove that conditional row selection is performed.
+
+  ### Merge Data
+
+  merged = df.merge(df2, on="Post Month", how="left")
+
+  This joins the main Facebook metrics dataset with campaign data.
+
+  on="Post Month" means this column is common in both datasets.
+
+  how="left" means keep all records from the main dataset and add matching campaign values from second dataset.
+
+  Output file:
+
+  outputs/merged.csv
+
+  Purpose: prove that data integration/merge is performed.
+
+  ### Sort Data
+
+  sorted_df = df.sort_values(
+      ["Page total likes", "Post Month"],
+      ascending=[False, True]
+  )
+
+  This sorts:
+
+  Page total likes -> descending
+  Post Month -> ascending
+
+  Output file:
+
+  outputs/sorted.csv
+
+  Purpose: prove that sorting operation is performed.
+
+  ### Transpose Data
+
+  transposed = (
+      df[["Post Month", "Post Weekday", "Lifetime Post Total Reach"]]
+      .head(5)
+      .set_index("Post Month")
+      .T
+  )
+
+  Step-by-step:
+
+  1. Select three columns
+  2. Take first five rows
+  3. Set Post Month as index
+  4. Transpose using .T
+
+  Output file:
+
+  outputs/transposed.csv
+
+  Purpose: prove that transpose operation is performed.
+
+  ### Reshape Using Melt
+
+  reshaped = df.melt(
+      id_vars=["Type", "Post Month"],
+      value_vars=["Lifetime Post Total Reach", "Lifetime Engaged Users"],
+      var_name="metric",
+      value_name="value"
+  )
+
+  id_vars are columns that remain fixed:
+
+  Type
+  Post Month
+
+  value_vars are columns converted into rows:
+
+  Lifetime Post Total Reach
+  Lifetime Engaged Users
+
+  New columns:
+
+  metric
+  value
+
+  Output file:
+
+  outputs/reshaped.csv
+
+  Purpose: prove wide-to-long reshaping.
+
+  ### Reshape Using Pivot Table
+
+  cast_wide = (
+      reshaped.pivot_table(
+          index=["Type", "Post Month"],
+          columns="metric",
+          values="value",
+          aggfunc="mean"
+      )
+      .reset_index()
+  )
+
+  This converts long-format data back into wide-format summary.
+
+  It groups by:
+
+  Type
+  Post Month
+
+  Then calculates average values for each metric.
+
+  Output file:
+
+  outputs/cast_wide.csv
+
+  Purpose: prove long-to-wide reshaping and aggregation.
+
+  ### Save All Outputs
+
+  subset_cols.to_csv(OUT_DIR / "subset_cols.csv", index=False)
+  subset_rows.to_csv(OUT_DIR / "subset_rows.csv", index=False)
+  merged.to_csv(OUT_DIR / "merged.csv", index=False)
+  sorted_df.to_csv(OUT_DIR / "sorted.csv", index=False)
+  transposed.to_csv(OUT_DIR / "transposed.csv")
+  reshaped.to_csv(OUT_DIR / "reshaped.csv", index=False)
+  cast_wide.to_csv(OUT_DIR / "cast_wide.csv", index=False)
+
+  Each operation creates one CSV file.
+
+  ## 5. Final Expected Output
+
+  python facebook_metrics_ops.py
+
+  You should get seven CSV files:
+
+  subset_cols.csv
+  subset_rows.csv
+  reshaped.csv
+  cast_wide.csv
+
+  Each file corresponds to one required operation from the assignment.
+
+  ## 6. Important Viva Questions
+
+  What is Pandas?
+  Pandas is a Python library used for data analysis and manipulation.
+
+  What is a DataFrame?
+  A DataFrame is a table-like structure with rows and columns.
+
+  What is subsetting?
+  Selecting specific rows or columns from a dataset.
+
+  What is merging?
+  Combining two datasets using a common column.
+
+  What is sorting?
+  Arranging data based on one or more columns.
+
+  What is transpose?
+  Changing rows into columns and columns into rows.
+
+  What is melt?
+  Converting wide-format data into long-format data.
+
+  What is pivot table?
+  Creating summarized wide-format data from long-format data.
+
+  What is how="left" in merge?
+  It keeps all rows from the left/main DataFrame and adds matching data from the right DataFrame.
+
+  What is aggfunc="mean"?
+  It calculates the average when multiple values belong to the same group.
+
+  Say next and I’ll explain Practical 5: Air Quality and Heart Disease Data Pipeline with this slightly more detailed style.
+
+
+› next
+
+
+• I’ll open Practical 5’s README, script, and sample datasets so the explanation matches the exact pipeline and outputs in your repo.
+
+• Explored
+  └ Read air_heart_pipeline.py, README.md, air_quality_sample.csv, heart_disease_sample.csv
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• # Practical 5: Air Quality and Heart Disease Data Pipeline
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to build a complete data preprocessing and machine learning pipeline using Python.
+
+  The practical uses two datasets:
+
+  1. Air Quality dataset
+  2. Heart Disease dataset
+
+  This practical covers:
+
+  - Data loading
+  - Data cleaning
+  - Handling missing values
+  - Removing duplicates
+  - Error correction
+  - Data transformation
+  - Data integration
+  - Storing data into SQLite database
+  - Feature scaling
+  - Model building
+  - Model evaluation
+  - Saving output files
+
+  Repo folder:
+
+  group_b/02_air_heart_pipeline
+
+  Important files:
+
+  group_b/02_air_heart_pipeline/air_heart_pipeline.py
+  group_b/02_air_heart_pipeline/data/air_quality_sample.csv
+  group_b/02_air_heart_pipeline/data/heart_disease_sample.csv
+  group_b/02_air_heart_pipeline/requirements.txt
+
+  Main script:
+
+  air_heart_pipeline.py
+
+  Output folder:
+
+  outputs/
+
+  The final output includes cleaned CSV files, a scaled dataset, an SQLite database, model file, and metrics report.
+
+  ## 2. Theory Explanation
+
+  ### What Is a Data Pipeline?
+
+  A data pipeline is a sequence of steps used to convert raw data into useful processed data.
+
+  In this practical, the pipeline is:
+
+  Load data
+  Clean data
+  Correct errors
+  Transform data
+  Integrate data
+  Build model
+  Evaluate model
+  Save outputs
+
+  This is a common flow in data science projects.
+
+  Raw datasets usually cannot be directly used for machine learning because they may contain:
+
+  missing values
+  wrong data types
+  duplicate rows
+  out-of-range values
+  unscaled features
+  inconsistent formats
+
+  So before model building, preprocessing is required.
+
+  ### Dataset 1: Air Quality Dataset
+
+  The air quality dataset contains pollution and weather-related readings.
+
+  Sample columns:
+
+  Date
+  Time
+  CO
+  PT08.S1
+  NO2
+  Temp
+  RH
+
+  Example row:
+
+  10/03/2004,18:00:00,2.6,1360,113,13.6,48.9
+
+  Meaning:
+
+  - Date: date of observation
+  - Time: time of observation
+  - CO: carbon monoxide value
+  - NO2: nitrogen dioxide value
+  - Temp: temperature
+  - RH: relative humidity
+
+  This dataset is mainly used for cleaning, transformation, and integration.
+
+  ### Dataset 2: Heart Disease Dataset
+
+  The heart disease dataset contains medical attributes of patients.
+
+  Sample columns:
+
+  age
+  sex
+  cp
+  trestbps
+  chol
+  fbs
+  restecg
+  thalach
+  exang
+  oldpeak
+  slope
+  ca
+  thal
+  target
+
+  Example row:
+
+  63,1,3,145,233,1,0,150,0,2.3,0,0,1,1
+
+  Important columns:
+
+  age: patient age
+  sex: gender encoded as number
+  cp: chest pain type
+  trestbps: resting blood pressure
+  chol: cholesterol level
+  thalach: maximum heart rate achieved
+  oldpeak: ST depression
+  target: output class for heart disease presence/absence
+
+  This dataset is used for cleaning, transformation, and model building.
+
+  ### What Is Data Cleaning?
+
+  Data cleaning means fixing problems in raw data.
+
+  Common cleaning tasks:
+
+  remove duplicate rows
+  convert columns to correct data types
+  handle missing values
+  remove invalid records
+  fix inconsistent values
+
+  In this practical, cleaning is done separately for air quality and heart disease data.
+
+  ### What Are Missing Values?
+
+  Missing values are absent or invalid data entries.
+
+  In the air quality dataset, missing values are represented as:
+
+  -200
+
+  So this value is not actual pollution data. It is a placeholder for missing data.
+
+  The script replaces -200 with NaN.
+
+  Then it fills missing values using the column median.
+
+  ### Why Use Median for Missing Values?
+
+  Median is the middle value of a column.
+
+  Example:
+
+  1, 2, 100
+
+  Mean:
+
+  34.33
+
+  Median:
+
+  2
+
+  Median is less affected by extreme values, so it is useful for filling missing numerical data.
+
+  ### What Is Error Correction?
+
+  Error correction means fixing values that are outside realistic limits.
+
+  Example:
+
+  Temperature below -20 or above 60 may be invalid for this dataset context.
+
+  So the code clips temperature:
+
+  air["Temp"] = air["Temp"].clip(lower=-20, upper=60)
+
+  For heart disease data, columns like blood pressure and cholesterol are clipped to valid ranges.
+
+  Examples:
+
+  trestbps between 80 and 240
+  chol between 100 and 600
+  thalach between 60 and 220
+  oldpeak between 0 and 6
+
+  This prevents extreme wrong values from affecting analysis.
+
+  ### What Is Data Transformation?
+
+  Data transformation means converting data into a format more suitable for analysis or modeling.
+
+  In this practical, transformations include:
+
+  - Creating datetime column from Date and Time
+  - Extracting hour from datetime
+  - Applying log transformation to CO
+  - Scaling heart disease features using StandardScaler
+
+  ### What Is Feature Scaling?
+
+  Feature scaling brings numeric columns to a comparable scale.
+
+  In heart disease data:
+
+  age may be around 40-70
+  chol may be around 150-350
+  oldpeak may be around 0-6
+
+  These columns have different ranges.
+
+  If we train a model without scaling, large-range columns may influence the model more.
+
+  So the script uses:
+
+  StandardScaler()
+
+  StandardScaler applies Z-score normalization:
+
+  z = (value - mean) / standard deviation
+
+  This creates scaled columns like:
+
+  age_z
+  chol_z
+  thalach_z
+
+  ### What Is Data Integration?
+
+  Data integration means combining data from multiple sources.
+
+  Here, air quality and heart disease data are different datasets, so they are not joined on a common column.
+
+  Instead, integration is demonstrated in two ways:
+
+  1. Both cleaned datasets are stored in one SQLite database.
+  2. Small previews are concatenated into one combined preview file with a source column.
+
+  The source column tells whether the row came from:
+
+  air
+  heart
+
+  ### What Is SQLite?
+
+  SQLite is a lightweight relational database.
+
+  It stores data in a .db file.
+
+  In this practical, cleaned air and heart data are stored in:
+
+  outputs/health_env.db
+
+  Inside this database, tables are created:
+
+  air_quality
+  heart_disease
+  data_inventory
+
+  ### What Is Model Building?
+
+  Model building means training a machine learning algorithm using data.
+
+  Here, the heart disease dataset is used to train a classification model.
+
+  The model predicts:
+
+  target
+
+  The target column represents whether heart disease is present or not.
+
+  ### What Is Logistic Regression?
+
+  Logistic Regression is a machine learning algorithm used for classification.
+
+  It predicts categories such as:
+
+  0 or 1
+  yes or no
+  disease or no disease
+
+  In this practical, it predicts the target column.
+
+  ### What Is Model Evaluation?
+
+  After training, the model is tested on unseen data.
+
+  The script calculates:
+
+  accuracy
+  classification report
+
+  Accuracy means:
+
+  correct predictions / total predictions
+
+  The classification report includes:
+
+  precision
+  recall
+  f1-score
+  support
+
+  You do not need to go too deep here for the practical, but you should know these are used to judge model performance.
+
+  ## 3. Practical Steps With Commands
+
+  ### Step 1: Go to Practical Folder
+
+  cd group_b/02_air_heart_pipeline
+
+  ### Step 2: Create Virtual Environment
+
+  python3 -m venv .venv
+
+  ### Step 3: Activate Virtual Environment
+
+  source .venv/bin/activate
+
+  ### Step 4: Install Dependencies
+
+  pip install -r requirements.txt
+
+  Dependencies include:
+
+  numpy
+  pandas
+  scikit-learn
+  joblib
+
+  sqlite3 is part of Python standard library, so it does not need separate installation.
+
+  ### Step 5: Run Script
+
+  python air_heart_pipeline.py
+
+  Expected output:
+
+  Pipeline complete. Outputs saved to outputs
+
+  ### Step 6: Check Output Folder
+
+  ls outputs
+
+  Expected files:
+
+  air_quality_clean.csv
+  heart_disease_clean.csv
+  heart_scaled.csv
+  integration_preview.csv
+  health_env.db
+  heart_model.pkl
+  metrics.json
+
+  ## 4. Code Explanation With File Reference
+
+  Main code file:
+
+  group_b/02_air_heart_pipeline/air_heart_pipeline.py
+
+  ### Imports
+
+  from pathlib import Path
+  import json
+  import sqlite3
+
+  import numpy as np
+  import pandas as pd
+
+  These are used for:
+
+  - file paths
+  - JSON metrics
+  - SQLite database
+  - numerical operations
+  - data manipulation
+
+  Machine learning imports:
+
+  from sklearn.model_selection import train_test_split
+  from sklearn.preprocessing import StandardScaler
+  from sklearn.linear_model import LogisticRegression
+  from sklearn.metrics import accuracy_score, classification_report
+  import joblib
+
+  These are used for:
+
+  - splitting train/test data
+  - scaling features
+  - training logistic regression
+  - evaluating model
+  - saving trained model
+
+  ### Folder Paths
+
+  BASE = Path(__file__).parent
+  DATA_DIR = BASE / "data"
+  OUT_DIR = BASE / "outputs"
+  OUT_DIR.mkdir(exist_ok=True)
+
+  Meaning:
+
+  DATA_DIR = data folder
+  OUT_DIR = outputs folder
+
+  The output folder is created automatically.
+
+  ### Loading Air Quality Data
+
+  def load_air_quality() -> pd.DataFrame:
+      path = DATA_DIR / "air_quality.csv"
+      sample = DATA_DIR / "air_quality_sample.csv"
+      return pd.read_csv(path if path.exists() else sample)
+
+  The script first checks for:
+
+  data/air_quality.csv
+
+  If not found, it uses:
+
+  data/air_quality_sample.csv
+
+  So the practical can run with sample data.
+
+  ### Loading Heart Disease Data
+
+  def load_heart_disease() -> pd.DataFrame:
+      path = DATA_DIR / "heart_disease.csv"
+      sample = DATA_DIR / "heart_disease_sample.csv"
+      return pd.read_csv(path if path.exists() else sample)
+
+  Same idea.
+
+  It first checks for full dataset, otherwise uses sample dataset.
+
+  ### Cleaning Air Quality Data
+
+  Function:
+
+  def clean_air_quality(df: pd.DataFrame) -> pd.DataFrame:
+
+  First, a copy is created:
+
+  air = df.copy()
+
+  This avoids modifying original data directly.
+
+  Date and time are converted to string:
+
+  air["Date"] = air["Date"].astype(str)
+  air["Time"] = air["Time"].astype(str)
+
+  Then combined into datetime:
+
+  air["datetime"] = pd.to_datetime(
+      air["Date"] + " " + air["Time"], errors="coerce", dayfirst=True
+  )
+
+  dayfirst=True is used because date format is like:
+
+  10/03/2004
+
+  meaning:
+
+  10 March 2004
+
+  Duplicate rows are removed:
+
+  air = air.drop_duplicates()
+
+  Numeric columns are detected:
+
+  num_cols = [c for c in air.columns if c not in ["Date", "Time", "datetime"]]
+
+  Each numeric column is converted:
+
+  air[col] = pd.to_numeric(air[col], errors="coerce")
+
+  Invalid -200 values are replaced:
+
+  air[col] = air[col].replace(-200, np.nan)
+
+  Missing values are filled using median:
+
+  air[col] = air[col].fillna(air[col].median())
+
+  CO is clipped to avoid negative values:
+
+  air["CO"] = air["CO"].clip(lower=0)
+
+  Temperature is clipped to valid range:
+
+  air["Temp"] = air["Temp"].clip(lower=-20, upper=60)
+
+  Hour is extracted:
+
+  air["hour"] = air["datetime"].dt.hour
+
+  Log transform is applied to CO:
+
+  air["co_log"] = np.log1p(air["CO"].astype(float))
+
+  log1p means:
+
+  log(1 + value)
+
+  This is safer than plain log because it handles zero values.
+
+  ### Cleaning Heart Disease Data
+
+  Function:
+
+  def clean_heart_disease(df: pd.DataFrame) -> pd.DataFrame:
+
+  Replace ? with missing values:
+
+  heart = df.copy().replace("?", np.nan)
+
+  Convert all columns to numeric:
+
+  for col in heart.columns:
+      heart[col] = pd.to_numeric(heart[col], errors="coerce")
+
+  Remove duplicates:
+
+  heart = heart.drop_duplicates()
+
+  Remove rows where target is missing:
+
+  heart = heart.dropna(subset=["target"])
+
+  Fill missing numeric values with median:
+
+  heart[col] = heart[col].fillna(heart[col].median())
+
+  Correct unrealistic values:
+
+  heart["trestbps"] = heart["trestbps"].clip(lower=80, upper=240)
+  heart["chol"] = heart["chol"].clip(lower=100, upper=600)
+  heart["thalach"] = heart["thalach"].clip(lower=60, upper=220)
+  heart["oldpeak"] = heart["oldpeak"].clip(lower=0, upper=6)
+
+  This completes error correction for heart data.
+
+  ### Integrating Data Into SQLite
+
+  Function:
+
+  def integrate_to_sqlite(air, heart, db_path):
+
+  SQLite connection:
+
+  with sqlite3.connect(db_path) as conn:
+
+  Save air data:
+
+  air.to_sql("air_quality", conn, if_exists="replace", index=False)
+
+  Save heart data:
+
+  heart.to_sql("heart_disease", conn, if_exists="replace", index=False)
+
+  Create inventory table:
+
+  summary = pd.DataFrame({
+      "table": ["air_quality", "heart_disease"],
+      "rows": [len(air), len(heart)],
+      "cols": [len(air.columns), len(heart.columns)]
+  })
+
+  This stores summary information about both datasets.
+
+  Database output:
+
+  outputs/health_env.db
+
+  ### Scaling Heart Disease Features
+
+  scaler = StandardScaler()
+  feature_cols = [c for c in heart.columns if c != "target"]
+  scaled = scaler.fit_transform(heart[feature_cols])
+
+  This scales all feature columns except target.
+
+  Then scaled output is saved:
+
+  scaled_df.to_csv(OUT_DIR / "heart_scaled.csv", index=False)
+
+  Output file:
+
+  outputs/heart_scaled.csv
+
+  ### Creating Integration Preview
+
+  air_preview = air.head(50).copy()
+  air_preview["source"] = "air"
+
+  heart_preview = heart.head(50).copy()
+  heart_preview["source"] = "heart"
+
+  Then both previews are combined:
+
+  integration_preview = pd.concat(
+      [air_preview, heart_preview], ignore_index=True, sort=False
+  )
+
+  Output:
+
+  outputs/integration_preview.csv
+
+  This demonstrates integration of two cleaned datasets in one preview file.
+
+  ### Building Model
+
+  Function:
+
+  def build_model(heart: pd.DataFrame) -> dict:
+
+  The target column is checked:
+
+  if "target" not in heart.columns:
+      raise ValueError("heart_disease dataset must include a target column")
+
+  Features and target are separated:
+
+  features = [c for c in heart.columns if c != "target"]
+  X = heart[features]
+  y = heart["target"].astype(int)
+
+  Train-test split:
+
+  X_train, X_test, y_train, y_test = train_test_split(
+      X, y, test_size=0.3, random_state=42, stratify=stratify
+  )
+
+  Meaning:
+
+  70% data for training
+  30% data for testing
+
+  Model creation:
+
+  model = LogisticRegression(max_iter=1000, solver="liblinear")
+
+  Model training:
+
+  model.fit(X_train, y_train)
+
+  Prediction:
+
+  preds = model.predict(X_test)
+
+  Evaluation:
+
+  accuracy_score(y_test, preds)
+  classification_report(y_test, preds, output_dict=True)
+
+  Save model:
+
+  joblib.dump(model, OUT_DIR / "heart_model.pkl")
+
+  Save metrics:
+
+  (OUT_DIR / "metrics.json").write_text(json.dumps(metrics, indent=2))
+
+  ## 5. Final Expected Output
+
+  After running:
+
+  python air_heart_pipeline.py
+
+  Expected output files:
+
+  air_quality_clean.csv
+  heart_disease_clean.csv
+  heart_scaled.csv
+  integration_preview.csv
+  health_env.db
+  heart_model.pkl
+  metrics.json
+
+  Meaning of each file:
+
+  air_quality_clean.csv
+  Cleaned air quality dataset.
+
+  heart_disease_clean.csv
+  Cleaned heart disease dataset.
+
+  heart_scaled.csv
+  Scaled heart disease features.
+
+  integration_preview.csv
+  Combined preview of air and heart datasets.
+
+  health_env.db
+  SQLite database containing cleaned datasets.
+
+  heart_model.pkl
+  Saved Logistic Regression model.
+  Model accuracy and classification report.
+
+  A sequence of steps that converts raw data into useful processed data.
+
+  What is data cleaning?
+  Removing or fixing missing, duplicate, invalid, or inconsistent data.
+
+  What is data integration?
+  Combining data from multiple sources or storing multiple datasets in a unified system.
+
+  What is data transformation?
+  Changing data format or scale so it is suitable for analysis or modeling.
+
+  What is error correction?
+  Fixing values that are outside valid or realistic ranges.
+
+  Why is -200 replaced in air quality data?
+  Because it represents missing sensor values, not actual readings.
+
+  Why use median for missing values?
+  Median is less affected by extreme values than mean.
+
+  What is StandardScaler?
+  It standardizes features using mean and standard deviation.
+
+  What is Logistic Regression?
+  A classification algorithm used to predict categorical output such as 0 or 1.
+
+  What is train-test split?
+  Dividing data into training data and testing data to evaluate model performance.
+
+  What is accuracy?
+  The ratio of correct predictions to total predictions.
+
+  What is joblib used for?
+  Saving the trained machine learning model to a file.
+
+  Say next and I’ll explain Practical 6: Python and Hadoop MapReduce for Forest Fire Data Analysis.
+
+─ Worked for 3m 02s ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+› next
+
+
+• I’ll cover Practical 6 using the mapper, reducer, Hive script, and forest fire sample data from your repo, with a little extra explanation around Hadoop Streaming because that is the core concept here.
+
+• Explored
+  └ Read mapper.py, reducer.py, README.md, forest_fires_sample.csv, forest_fire.hql
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• # Practical 6: Python and Hadoop MapReduce for Forest Fire Data Analysis
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to integrate Python with Hadoop and process the Forest Fire dataset using MapReduce.
+
+  You will do two things:
+
+  1. Use Python mapper and reducer scripts with Hadoop Streaming
+  2. Use HiveQL to perform simple analysis on the same forest fire dataset
+
+  This practical covers:
+
+  - Forest Fire dataset structure
+  - Python mapper script
+  - Python reducer script
+  - Key-value pair generation
+  - Hadoop Streaming
+  - Local testing without Hadoop
+  - Running Python scripts on Hadoop
+  - Hive table creation
+  - Hive aggregation queries
+
+  Repo folder:
+
+  group_b/03_python_hadoop_forest_fire
+
+  Important files:
+
+  group_b/03_python_hadoop_forest_fire/mapper.py
+  group_b/03_python_hadoop_forest_fire/reducer.py
+  group_b/03_python_hadoop_forest_fire/hive/forest_fire.hql
+  group_b/03_python_hadoop_forest_fire/data/forest_fires_sample.csv
+
+  Main goal:
+
+  Calculate average burned forest area per month.
+
+  Example output:
+
+  aug    2.8000
+  sep    0.7333
+  mar    0.0000
+
+  ## 2. Theory Explanation
+
+  ### What Is the Forest Fire Dataset?
+
+  The Forest Fire dataset contains environmental and weather-related data about forest fires.
+
+  Columns in your sample dataset:
+
+  X
+  Y
+  month
+  day
+  FFMC
+  DMC
+  DC
+  ISI
+  temp
+  RH
+  wind
+  rain
+  area
+
+  Example row:
+
+  7,5,mar,fri,86.2,26.2,94.3,5.1,8.2,51,6.7,0.0,0.0
+
+  Important columns for this practical:
+
+  month
+  area
+
+  month tells the month of the fire record.
+
+  area tells the burned area of forest.
+
+  The practical calculates:
+
+  average burned area for each month
+
+  ### What Is MapReduce in This Practical?
+
+  MapReduce is used to process data in two phases:
+
+  Mapper phase
+  Reducer phase
+
+  Here, the mapper reads each forest fire record and extracts:
+
+  month
+  area
+
+  Then the reducer groups all records by month and calculates average area.
+
+  ### What Does Mapper Do?
+
+  The mapper reads input line by line.
+
+  Input row:
+
+  8,6,aug,mon,92.3,85.3,488.0,14.7,22.2,29,5.4,0.0,2.5
+
+  The mapper extracts:
+
+  month = aug
+  area = 2.5
+
+  Mapper output:
+
+  aug    2.5
+
+  So mapper converts raw CSV data into key-value pairs.
+
+  Key:
+
+  month
+
+  Value:
+
+  burned area
+
+  ### What Does Reducer Do?
+
+  Reducer receives sorted mapper output.
+
+  Example mapper output after sorting:
+
+  aug    2.5
+  aug    3.1
+  sep    0.0
+  sep    1.8
+  sep    0.4
+
+  Reducer groups by month:
+
+  aug -> 2.5, 3.1
+  sep -> 0.0, 1.8, 0.4
+
+  Then calculates average:
+
+  aug = (2.5 + 3.1) / 2 = 2.8
+  sep = (0.0 + 1.8 + 0.4) / 3 = 0.7333
+
+  Final reducer output:
+
+  aug    2.8000
+  sep    0.7333
+
+  ### What Is Hadoop Streaming?
+
+  Normally Hadoop MapReduce is written in Java.
+
+  Python
+  Shell
+  Perl
+  Ruby
+
+  In this practical, mapper and reducer are Python files:
+
+  mapper.py
+  reducer.py
+
+  Hadoop Streaming sends input data to mapper through standard input.
+
+  Mapper prints output to standard output.
+
+  Then Hadoop sorts the mapper output and sends it to reducer.
+
+  Reducer also reads from standard input and prints final output.
+
+  So this pipeline works like:
+
+  CSV file -> mapper.py -> sort/group by Hadoop -> reducer.py -> final output
+
+  ### Why Local Testing Is Important?
+
+  Before running on Hadoop, we can test the mapper and reducer locally:
+
+  cat data/forest_fires_sample.csv | python3 mapper.py | sort | python3 reducer.py
+
+  This simulates the MapReduce flow:
+
+  cat      gives input
+  mapper   extracts month and area
+  sort     groups same months together
+  reducer  calculates average
+
+  If local testing works, Hadoop Streaming is more likely to work.
+
+  ### Why Sorting Is Needed?
+
+  Reducer logic assumes records for the same month come together.
+
+  Example good sorted input:
+
+  aug    2.5
+  aug    3.1
+  sep    0.0
+  sep    1.8
+
+  Bad unsorted input:
+
+  aug    2.5
+  sep    0.0
+  aug    3.1
+
+  If unsorted, reducer may treat aug as separate groups.
+
+  In Hadoop, sorting happens automatically between mapper and reducer.
+
+  In local testing, we manually use:
+
+  sort
+
+  ### What Is Hive Doing in This Practical?
+
+  Hive is used as the second part of this practical.
+
+  Instead of mapper/reducer, Hive lets us write SQL-like queries.
+
+  The Hive script:
+
+  hive/forest_fire.hql
+
+  Creates a table, loads CSV data, and runs:
+
+  SELECT month, AVG(area) AS avg_area
+  FROM forest_fires
+  GROUP BY month
+  ORDER BY avg_area DESC;
+
+  This gives the same type of result as MapReduce, but using HiveQL.
+
+  So this practical demonstrates both:
+
+  Python + Hadoop Streaming
+  HiveQL data mining
+
+  ## 3. Practical Steps With Commands
+
+  ### Part A: Local Testing Without Hadoop
+
+  #### Step 1: Go to Practical Folder
+
+  cd group_b/03_python_hadoop_forest_fire
+
+  #### Step 2: Run Mapper and Reducer Locally
+
+  cat data/forest_fires_sample.csv | python3 mapper.py | sort | python3 reducer.py
+
+  Expected output:
+
+  aug    2.8000
+  mar    0.0000
+  may    0.0000
+  oct    0.0000
+  sep    0.7333
+
+  This proves that the Python mapper and reducer logic is correct.
+
+  ### Part B: Hadoop Streaming Execution
+
+  #### Step 1: Start Hadoop Services
+
+  start-dfs.sh
+  start-yarn.sh
+  jps
+
+  Expected services:
+
+  NameNode
+  DataNode
+  SecondaryNameNode
+  ResourceManager
+  NodeManager
+
+  #### Step 2: Upload Dataset to HDFS
+
+  Create input folder:
+
+  hdfs dfs -mkdir -p /input/forest
+
+  Remove old file if already present:
+
+  hdfs dfs -rm -f /input/forest/forest_fires_sample.csv
+
+  Upload dataset:
+
+  hdfs dfs -put data/forest_fires_sample.csv /input/forest/
+
+  Check uploaded file:
+
+  hdfs dfs -ls /input/forest
+
+  #### Step 3: Remove Old Output Folder
+
+  Hadoop output folder must not already exist.
+
+  hdfs dfs -rm -r -f /output/forest_fire_avg
+
+  #### Step 4: Run Hadoop Streaming Job
+
+  hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
+    -files mapper.py,reducer.py \
+    -mapper "python3 mapper.py" \
+    -reducer "python3 reducer.py" \
+    -input /input/forest/forest_fires_sample.csv \
+    -output /output/forest_fire_avg
+
+  Meaning of options:
+
+  -files mapper.py,reducer.py
+  Sends mapper and reducer files to Hadoop worker environment.
+
+  -mapper "python3 mapper.py"
+  Tells Hadoop which mapper command to run.
+
+  -reducer "python3 reducer.py"
+  Tells Hadoop which reducer command to run.
+
+  -input
+  HDFS input path.
+
+  -output
+  HDFS output path.
+
+  #### Step 5: View Hadoop Output
+
+  hdfs dfs -cat /output/forest_fire_avg/part-00000
+
+  Expected output style:
+
+  aug    2.8000
+  mar    0.0000
+  may    0.0000
+  oct    0.0000
+  sep    0.7333
+
+  ### Part C: Hive Execution
+
+  #### Step 1: Make Sure Hadoop and Hive Are Ready
+
+  start-dfs.sh
+  start-yarn.sh
+
+  If Hive metastore is not initialized:
+
+  schematool -initSchema -dbType derby
+
+  #### Step 2: Run Hive Script
+
+  hive -f hive/forest_fire.hql
+
+  This script creates a Hive database, table, loads data, and runs analytical queries.
+
+  ## 4. Code Explanation With File Reference
+
+  ### Mapper File
+
+  File:
+
+  group_b/03_python_hadoop_forest_fire/mapper.py
+
+  Code:
+
+  import csv
+  import sys
+
+  csv is used to read CSV rows safely.
+
+  sys.stdin is used because Hadoop Streaming sends input through standard input.
+
+  reader = csv.reader(sys.stdin)
+  header = next(reader, None)
+
+  This creates a CSV reader and skips the header row.
+
+  Header:
+
+  X,Y,month,day,FFMC,DMC,DC,ISI,temp,RH,wind,rain,area
+
+  Then each row is processed:
+
+  for row in reader:
+
+  Empty rows are ignored:
+
+  if not row:
+      continue
+
+  Rows with fewer than 13 columns are ignored:
+
+  if len(row) < 13:
+      continue
+
+  Month is extracted:
+
+  month = row[2].strip().lower()
+
+  Why index 2?
+
+  Because columns are:
+
+  0 X
+  1 Y
+  2 month
+  3 day
+  ...
+  12 area
+
+  Area is extracted:
+
+  area_str = row[12].strip()
+
+  Area is converted to float:
+
+  area = float(area_str)
+
+  If conversion fails, row is skipped:
+
+  except ValueError:
+      continue
+
+  Final mapper output:
+
+  print(f"{month}\t{area}")
+
+  This prints tab-separated key-value pair:
+
+  month    area
+
+  Example:
+
+  aug    2.5
+
+  ### Reducer File
+
+  File:
+
+  group_b/03_python_hadoop_forest_fire/reducer.py
+
+  Initial variables:
+
+  current_month = None
+  sum_area = 0.0
+  count = 0
+
+  These track the current group.
+
+  Reducer reads line by line:
+
+  for line in sys.stdin:
+
+  Each line is split by tab:
+
+  parts = line.split("\t")
+
+  Month and area are extracted:
+
+  month, area_str = parts
+
+  Area is converted:
+
+  area = float(area_str)
+
+  First month is initialized:
+
+  if current_month is None:
+      current_month = month
+
+  If month changes, reducer prints average for previous month:
+
+  if month != current_month:
+      avg = sum_area / count if count else 0.0
+      print(f"{current_month}\t{avg:.4f}")
+
+  Then it starts a new group:
+
+  current_month = month
+  sum_area = 0.0
+  count = 0
+
+  For each row, it adds area and count:
+
+  sum_area += area
+  count += 1
+
+  At the end, it prints the final month group:
+
+  if current_month is not None:
+      avg = sum_area / count if count else 0.0
+      print(f"{current_month}\t{avg:.4f}")
+
+  ### Hive Script
+
+  File:
+
+  group_b/03_python_hadoop_forest_fire/hive/forest_fire.hql
+
+  Create database:
+
+  CREATE DATABASE IF NOT EXISTS forest_db;
+  USE forest_db;
+
+  Drop old table:
+
+  DROP TABLE IF EXISTS forest_fires;
+
+  Create table:
+
+  CREATE TABLE forest_fires (
+    x INT,
+    y INT,
+    month STRING,
+    day STRING,
+    ffmc DOUBLE,
+    dmc DOUBLE,
+    dc DOUBLE,
+    isi DOUBLE,
+    temp DOUBLE,
+    rh DOUBLE,
+    wind DOUBLE,
+    rain DOUBLE,
+    area DOUBLE
+  )
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY ','
+  STORED AS TEXTFILE
+  TBLPROPERTIES ("skip.header.line.count"="1");
+
+  Important part:
+
+  TBLPROPERTIES ("skip.header.line.count"="1");
+
+  This skips the CSV header row.
+
+  Load data:
+
+  LOAD DATA LOCAL INPATH 'data/forest_fires_sample.csv' INTO TABLE forest_fires;
+
+  Query 1: average burned area per month:
+
+  SELECT month, AVG(area) AS avg_area
+  FROM forest_fires
+  GROUP BY month
+  ORDER BY avg_area DESC;
+
+  Query 2: number of fire records per month:
+
+  SELECT month, COUNT(*) AS fire_count
+  FROM forest_fires
+  GROUP BY month
+  ORDER BY fire_count DESC;
+
+  Local MapReduce-style output:
+
+  aug    2.8000
+  mar    0.0000
+  may    0.0000
+  oct    0.0000
+
+  /output/forest_fire_avg/part-00000
+
+  ## 6. Important Viva Questions
+
+  What is Hadoop Streaming?
+  A Hadoop utility that allows mapper and reducer programs to be written in languages other than Java.
+
+  Why are mapper and reducer written in Python here?
+  Because Hadoop Streaming can execute Python scripts as MapReduce components.
+
+  What does mapper output?
+  It outputs month and burned area as key-value pairs.
+
+  What does reducer calculate?
+  It calculates average burned area per month.
+
+  Why is sort used in local testing?
+  Reducer expects same keys together. Hadoop sorts automatically, but local testing needs manual sorting.
+
+  What is the key in this practical?
+  The month.
+
+  What is the value in this practical?
+  The burned area.
+
+  What does sys.stdin mean?
+  It reads input from standard input, which is how Hadoop Streaming passes data to Python scripts.
+
+  What is the purpose of Hive in this practical?
+  To load the same dataset into a Hive table and run SQL-like analytical queries.
+
+  Why skip header line in Hive?
+  Because the first CSV row contains column names, not actual data.
+
+  Say next and I’ll explain Practical 7: Data Visualization using Matplotlib and Seaborn.
+
+
+› next
+
+
+• I’ll cover Practical 7 from the actual visualization script and its sample datasets, focusing on what each graph is meant to show and which assignment data it corresponds to.
+
+• Explored
+  └ Read visualize_air_heart_forest.py, README.md
+    List data
+    List outputs
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• # Practical 7: Data Visualization Using Matplotlib and Seaborn
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to visualize datasets using Python visualization libraries.
+
+  This practical uses datasets from earlier practicals:
+
+  1. Air Quality dataset
+  2. Heart Disease dataset
+  3. Forest Fire dataset
+
+  The goal is to create graphs that help understand patterns in the data.
+
+  This practical covers:
+
+  - Loading datasets using Pandas
+  - Creating a time-series line plot
+  - Creating a correlation heatmap
+  - Creating a categorical bar plot
+  - Saving graphs as image files
+  - Using Matplotlib and Seaborn for visualization
+
+  Repo folder:
+
+  group_b/04_visualization_matplotlib_seaborn
+
+  Important files:
+
+  group_b/04_visualization_matplotlib_seaborn/visualize_air_heart_forest.py
+  group_b/04_visualization_matplotlib_seaborn/data/air_quality_sample.csv
+  group_b/04_visualization_matplotlib_seaborn/data/heart_disease_sample.csv
+  group_b/04_visualization_matplotlib_seaborn/data/forest_fires_sample.csv
+  group_b/04_visualization_matplotlib_seaborn/requirements.txt
+
+  Main script:
+
+  visualize_air_heart_forest.py
+
+  Generated output graphs:
+
+  outputs/air_co_timeseries.png
+  outputs/heart_corr_heatmap.png
+  outputs/forest_area_by_month.png
+
+  ## 2. Theory Explanation
+
+  ### What Is Data Visualization?
+
+  Data visualization means representing data using graphs or charts.
+
+  Raw tables are useful, but patterns are easier to understand visually.
+
+  For example, a table may contain many CO readings over time. A line chart immediately shows whether CO is increasing, decreasing, or fluctuating.
+
+  Visualization helps in:
+
+  understanding trends
+  finding patterns
+  detecting outliers
+  comparing groups
+  communicating results
+
+  ### What Is Matplotlib?
+
+  Matplotlib is a Python library used to create graphs.
+
+  It is good for basic and customizable plots like:
+
+  line plot
+  bar plot
+  scatter plot
+  histogram
+  pie chart
+
+  In this practical, Matplotlib is used for:
+
+  plt.plot()
+  plt.figure()
+  plt.title()
+  plt.xlabel()
+  plt.ylabel()
+  plt.savefig()
+
+  Matplotlib gives detailed control over graph size, labels, title, and output file.
+
+  ### What Is Seaborn?
+
+  Seaborn is another Python visualization library built on top of Matplotlib.
+
+  It is useful for statistical visualizations.
+
+  It provides easier functions for:
+
+  heatmaps
+  bar plots
+  box plots
+  pair plots
+  distribution plots
+
+  In this practical, Seaborn is used for:
+
+  sns.heatmap()
+  sns.barplot()
+
+  Seaborn makes these plots simpler and more visually clear.
+
+  ### Difference Between Matplotlib and Seaborn
+
+  Matplotlib:
+
+  general-purpose plotting library
+  more control
+  slightly more manual
+
+  Seaborn:
+
+  statistical plotting library
+  better default styles
+  easier for data analysis graphs
+  built on top of Matplotlib
+
+  In practical terms, we often use both together.
+
+  ### Visualization 1: Air Quality Time-Series Plot
+
+  Dataset:
+
+  air_quality_sample.csv
+
+  Important columns:
+
+  Date
+  Time
+  CO
+
+  The script combines Date and Time into one datetime column.
+
+  Then it plots:
+
+  X-axis: datetime
+  Y-axis: CO value
+
+  This is a time-series plot.
+
+  A time-series plot shows how a value changes over time.
+
+  Here, it helps answer:
+
+  How does carbon monoxide level change over time?
+
+  Output graph:
+
+  outputs/air_co_timeseries.png
+
+  ### Visualization 2: Heart Disease Correlation Heatmap
+
+  Dataset:
+
+  heart_disease_sample.csv
+
+  Important columns include:
+
+  age
+  trestbps
+  chol
+  thalach
+  oldpeak
+  target
+
+  The script calculates correlation between numeric columns.
+
+  Correlation tells how strongly two variables are related.
+
+  Correlation value ranges from:
+
+  -1 to +1
+
+  Meaning:
+
+  +1: strong positive relation
+  0: no linear relation
+  -1: strong negative relation
+
+  Example:
+
+  If two columns increase together, correlation is positive.
+
+  If one increases while another decreases, correlation is negative.
+
+  A heatmap shows these correlation values using colors.
+
+  outputs/heart_corr_heatmap.png
+
+  This helps identify which medical features are related to each other or to the target column.
+
+  ### Visualization 3: Forest Fire Bar Plot
+
+  Dataset:
+
+  forest_fires_sample.csv
+
+  Important columns:
+
+  month
+  area
+
+  The script groups data by month and calculates average burned area.
+
+  Then it plots:
+
+  X-axis: month
+  Y-axis: average burned area
+
+  This is a bar plot.
+
+  It helps answer:
+
+  Which month has higher average burned forest area?
+
+  Output graph:
+
+  outputs/forest_area_by_month.png
+
+  ### What Is Exploratory Data Analysis?
+
+  Exploratory Data Analysis, or EDA, means understanding data before deeper analysis or modeling.
+
+  EDA includes:
+
+  checking distributions
+  checking relationships
+  checking trends
+  checking missing values
+  checking outliers
+
+  This practical is mainly an EDA practical using visualization.
+
+  ### Why Save Graphs as PNG?
+
+  The script saves graphs as .png files so they can be:
+
+  submitted in journal
+  inserted into report
+  shown during viva
+  reused in presentation
+
+  The command used is:
+
+  plt.savefig(...)
+
+  ## 3. Practical Steps With Commands
+
+  ### Step 1: Go to Practical Folder
+
+  cd group_b/04_visualization_matplotlib_seaborn
+
+  ### Step 2: Create Virtual Environment
+
+  python3 -m venv .venv
+
+  ### Step 3: Activate Virtual Environment
+
+  source .venv/bin/activate
+
+  ### Step 4: Install Dependencies
+
+  pip install -r requirements.txt
+
+  Dependencies:
+
+  pandas
+  matplotlib
+  seaborn
+
+  ### Step 5: Run Visualization Script
+
+  python visualize_air_heart_forest.py
+
+  Expected output:
+
+  Plots saved to outputs
+
+  ### Step 6: Check Generated Graphs
+
+  ls outputs
+
+  Expected files:
+
+  air_co_timeseries.png
+  heart_corr_heatmap.png
+  forest_area_by_month.png
+
+  Open these images and check the graphs.
+
+  ## 4. Code Explanation With File Reference
+
+  Main code file:
+
+  group_b/04_visualization_matplotlib_seaborn/visualize_air_heart_forest.py
+
+  ### Imports
+
+  from pathlib import Path
+  import pandas as pd
+  import seaborn as sns
+  import matplotlib.pyplot as plt
+
+  Path handles folder paths.
+
+  pandas loads and processes CSV files.
+
+  seaborn creates heatmap and bar plot.
+
+  matplotlib.pyplot creates and saves plots.
+
+  ### Folder Setup
+
+  BASE = Path(__file__).parent
+  DATA_DIR = BASE / "data"
+  OUT_DIR = BASE / "outputs"
+  OUT_DIR.mkdir(exist_ok=True)
+
+  Meaning:
+
+  DATA_DIR = input CSV folder
+  OUT_DIR = output image folder
+
+  If outputs/ does not exist, it is created automatically.
+
+  ### Data Loading Function
+
+  def load_df(name: str, sample_name: str) -> pd.DataFrame:
+      path = DATA_DIR / name
+      sample = DATA_DIR / sample_name
+      return pd.read_csv(path if path.exists() else sample)
+
+  This function first looks for full dataset.
+
+  For example:
+
+  data/air_quality.csv
+
+  If not found, it uses sample dataset:
+
+  data/air_quality_sample.csv
+
+  So the practical runs with sample data but can also use full datasets.
+
+  ### Function 1: Air Quality Line Plot
+
+  def plot_air_quality() -> None:
+
+  Load data:
+
+  air = load_df("air_quality.csv", "air_quality_sample.csv")
+
+  Create datetime column:
+
+  air["datetime"] = pd.to_datetime(
+      air["Date"].astype(str) + " " + air["Time"].astype(str),
+      errors="coerce",
+      dayfirst=True
+  )
+
+  This combines:
+
+  Date + Time
+
+  into one datetime value.
+
+  Create figure:
+
+  plt.figure(figsize=(8, 4))
+
+  This sets graph size.
+
+  Plot line graph:
+
+  plt.plot(air["datetime"], air["CO"], color="steelblue")
+
+  Set title and labels:
+
+  plt.title("Air quality - CO over time")
+  plt.xlabel("Datetime")
+  plt.ylabel("CO")
+
+  Adjust layout:
+
+  plt.tight_layout()
+
+  Save image:
+
+  plt.savefig(OUT_DIR / "air_co_timeseries.png", dpi=150)
+
+  Close plot:
+
+  plt.close()
+
+  Closing is important because multiple graphs are created in the same script.
+
+  ### Function 2: Heart Disease Correlation Heatmap
+
+  def plot_heart_corr() -> None:
+
+  Load data:
+
+  heart = load_df("heart_disease.csv", "heart_disease_sample.csv")
+
+  Convert columns to numeric:
+
+  heart = heart.apply(pd.to_numeric, errors="coerce")
+
+  Calculate correlation matrix:
+
+  corr = heart.corr(numeric_only=True)
+
+  A correlation matrix is a table showing correlation between every pair of numeric columns.
+
+  Create figure:
+
+  plt.figure(figsize=(7, 6))
+
+  Create heatmap:
+
+  sns.heatmap(corr, cmap="Blues", linewidths=0.5)
+
+  cmap="Blues" means values are shown using blue color shades.
+
+  linewidths=0.5 adds small lines between heatmap cells.
+
+  Save image:
+
+  plt.savefig(OUT_DIR / "heart_corr_heatmap.png", dpi=150)
+
+  ### Function 3: Forest Fire Bar Plot
+
+  def plot_forest_area() -> None:
+
+  Load data:
+
+  forest = load_df("forest_fires.csv", "forest_fires_sample.csv")
+
+  Convert area to numeric:
+
+  forest["area"] = pd.to_numeric(forest["area"], errors="coerce").fillna(0)
+
+  If any area value is invalid, it becomes missing and then is filled with 0.
+
+  Group by month:
+
+  avg_by_month = forest.groupby("month", as_index=False)["area"].mean()
+
+  This calculates average burned area for each month.
+
+  Create bar plot:
+
+  sns.barplot(data=avg_by_month, x="month", y="area", color="seagreen")
+
+  Set title and labels:
+
+  plt.title("Forest fires - avg burned area by month")
+  plt.xlabel("Month")
+  plt.ylabel("Average area")
+
+  Save image:
+
+  plt.savefig(OUT_DIR / "forest_area_by_month.png", dpi=150)
+
+  ### Main Function
+
+  def main() -> None:
+      plot_air_quality()
+      plot_heart_corr()
+      plot_forest_area()
+      print("Plots saved to", OUT_DIR)
+
+  This calls all three plotting functions.
+
+  Script starts here:
+
+  if __name__ == "__main__":
+      main()
+
+  ## 5. Final Expected Output
+
+  After running:
+
+  python visualize_air_heart_forest.py
+
+  You should get:
+
+  air_co_timeseries.png
+  heart_corr_heatmap.png
+  forest_area_by_month.png
+
+  Meaning of each:
+
+  air_co_timeseries.png
+  Shows CO level over time.
+  Shows correlation among heart disease attributes.
+
+  forest_area_by_month.png
+  Shows average burned area for each month.
+
+  ## 6. Important Viva Questions
+  What is Matplotlib?
+  A Python library for creating plots and graphs.
+
+  What is Seaborn?
+  A statistical visualization library built on top of Matplotlib.
+
+  What is a time-series plot?
+  A graph showing how a value changes over time.
+
+  Which graph is used for air quality data?
+  Line plot.
+
+  Why line plot for air quality?
+  Because CO values are observed over time.
+
+  What is correlation?
+  A measure of relationship between two numeric variables.
+
+  What is a heatmap?
+  A color-coded matrix used to visualize values like correlations.
+
+  Which graph is used for heart disease data?
+  Correlation heatmap.
+
+  Which graph is used for forest fire data?
+  Bar plot.
+
+  Why bar plot for forest fire data?
+  Because we compare average burned area across months.
+
+  What is plt.savefig() used for?
+  Saving a graph as an image file.
+
+  What is groupby() used for?
+  Grouping data based on a column and applying aggregate functions like mean.
+
+  Say next and I’ll explain Practical 8: Tableau Visualization on Adult and Iris Datasets.
+
+
+› next
+
+
+• I’ll move to Practical 8 and use the Tableau prep script plus the generated CSVs, since this practical is partly Python data preparation and partly manual Tableau dashboard creation.
+
+• Explored
+  └ Read README.md, prep_tableau_data.py
+    List data
+
+• Ran for f in group_b/05_tableau_visualization/data/*.csv; do printf '%s\n' "$f"; sed -n '1,8p' "$f"; done
+  └ group_b/05_tableau_visualization/data/adult_sample.csv
+    age,workclass,fnlwgt,education,education_num,marital_status,occupation,relationship,race,sex,capital_gain,capital_loss,hours_per_week,native_country,income
+    … +13 lines (ctrl + t to view transcript)
+    5.5,2.3,4.0,1.3,versicolor
+    6.5,2.8,4.6,1.5,versicolor
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• # Practical 8: Data Visualization Using Tableau
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to create different types of visualizations in Tableau using the Adult and Iris datasets.
+
+  This practical has two parts:
+
+  1. Prepare datasets using Python
+  2. Import prepared CSV files into Tableau and create visualizations
+
+  This practical covers:
+
+  - Data preparation for Tableau
+  - Feature engineering
+  - 1D visualization
+  - 2D visualization
+  - 3D / bubble visualization
+  - Temporal visualization
+  - Multidimensional visualization
+  - Tree / hierarchical visualization
+  - Network-style visualization
+
+  Repo folder:
+
+  group_b/05_tableau_visualization
+
+  Important files:
+
+  group_b/05_tableau_visualization/prep_tableau_data.py
+  group_b/05_tableau_visualization/data/adult_sample.csv
+  group_b/05_tableau_visualization/data/iris_sample.csv
+  group_b/05_tableau_visualization/requirements.txt
+
+  Generated files:
+
+  outputs/adult_tableau.csv
+  outputs/iris_tableau.csv
+  outputs/adult_network_edges.csv
+
+  Main thing to remember: Python only prepares the data. Actual charts are created manually in Tableau.
+
+  ## 2. Theory Explanation
+
+  ### What Is Tableau?
+
+  Tableau is a Business Intelligence and data visualization tool.
+
+  It is used to create:
+
+  charts
+  dashboards
+  reports
+  interactive visual analysis
+
+  Tableau allows users to drag and drop fields into rows, columns, colors, filters, labels, and sizes.
+
+  It is useful because it can quickly convert tabular data into visual dashboards.
+
+  ### What Is Business Intelligence?
+
+  Business Intelligence means analyzing data to support decision-making.
+
+  Examples:
+
+  Which age group works more hours?
+  Which flower species has larger petals?
+  Which occupation group has high income?
+  Which education category appears most often?
+
+  Tableau is commonly used in BI because it can create dashboards without writing much code.
+
+  ### Datasets Used
+
+  This practical uses two datasets.
+
+  #### Adult Dataset
+
+  File:
+
+  data/adult_sample.csv
+
+  Important columns:
+
+  age
+  workclass
+  education
+  occupation
+  hours_per_week
+  income
+  sex
+  race
+  native_country
+
+  Example row:
+
+  39,State-gov,77516,Bachelors,13,Never-married,Adm-clerical,Not-in-family,White,Male,2174,0,40,United-States,<=50K
+
+  This dataset is useful for demographic and income-related visualizations.
+
+  #### Iris Dataset
+
+  File:
+
+  data/iris_sample.csv
+
+  Important columns:
+
+  sepal_length
+  sepal_width
+  petal_length
+  petal_width
+  species
+
+  Example row:
+
+  5.1,3.5,1.4,0.2,setosa
+
+  This dataset is useful for comparing flower measurements across species.
+
+  ### What Is Data Preparation?
+
+  Data preparation means modifying raw data so it is easier to visualize.
+
+  Raw data may not directly contain fields required for charts.
+
+  For example, Tableau can show age, but a histogram or grouped chart is easier if we also create:
+
+  age_group
+
+  Similarly, for time-series visualization, we need a date column. The Adult dataset does not naturally have a date column, so the script creates:
+
+  record_date
+
+  ### What Is Feature Engineering?
+
+  Feature engineering means creating new useful columns from existing columns.
+
+  In this practical, the Python script creates:
+
+  For Iris:
+
+  sepal_area = sepal_length * sepal_width
+  petal_area = petal_length * petal_width
+
+  For Adult:
+
+  age_group
+  hours_group
+  income_binary
+  record_date
+
+  These new columns make Tableau charts easier.
+
+  ### What Are Dimensions and Measures in Tableau?
+
+  This is important for viva.
+
+  #### Dimension
+
+  A dimension is usually categorical data.
+
+  Examples:
+
+  species
+  education
+  occupation
+  sex
+  income
+  age_group
+
+  Dimensions are used to group data.
+
+  #### Measure
+
+  A measure is usually numerical data.
+
+  Examples:
+
+  age
+  hours_per_week
+  sepal_length
+  petal_width
+  petal_area
+  income_binary
+
+  Measures are used for calculations like:
+
+  sum
+  average
+  count
+  minimum
+  maximum
+
+  Example:
+
+  Dimension: species
+  Measure: average petal_length
+
+  This compares average petal length by flower species.
+
+  ### Types of Visualizations in This Practical
+
+  #### 1D Visualization
+
+  1D visualization uses one main variable.
+
+  Example:
+
+  Histogram of age
+
+  It shows distribution of one variable.
+
+  For Adult dataset:
+
+  age
+
+  #### 2D Visualization
+
+  2D visualization uses two variables.
+
+  Example:
+
+  Scatter plot of sepal_length vs sepal_width
+
+  For Iris dataset:
+
+  X-axis: sepal_length
+  Y-axis: sepal_width
+
+  This helps compare two measurements.
+
+  #### 3D / Volumetric Visualization
+
+  Tableau does not always create true 3D charts, but we can represent 3 variables using:
+
+  X-axis
+  Y-axis
+  size
+  color
+
+  Example:
+
+  X-axis: sepal_length
+  Y-axis: sepal_width
+  Size: petal_area
+  Color: species
+
+  This creates a bubble chart.
+
+  It visually represents more than two variables.
+
+  #### Temporal Visualization
+
+  Temporal visualization shows changes over time.
+
+  The script creates:
+
+  record_date
+
+  Then Tableau can create:
+
+  Line chart of hours_per_week over record_date
+
+  Even though sample Adult data does not naturally have time, this generated date column allows demonstration of temporal visualization.
+
+  #### Multidimensional Visualization
+
+  Multidimensional visualization uses multiple fields at the same time.
+
+  Example:
+
+  X-axis: sepal_length
+  Y-axis: petal_length
+  Color: species
+  Size: petal_area
+  Shape: species
+
+  This shows several dimensions/measures in one chart.
+
+  #### Tree / Hierarchical Visualization
+
+  Hierarchical visualization shows nested categories.
+
+  Example using Adult dataset:
+
+  education -> occupation
+
+  A treemap can show how occupations are distributed inside education categories.
+
+  #### Network Visualization
+
+  Network visualization shows relationships between entities.
+
+  In this practical, the script creates an edge list:
+
+  outputs/adult_network_edges.csv
+
+  It contains:
+
+  occupation
+  education
+
+  This can be used to show relationships between education and occupation.
+
+  Tableau is not a dedicated network graph tool, but this data can still be visualized as relationship-style views using rows/columns, packed bubbles, or Sankey-like extensions if available.
+
+  ## 3. Practical Steps With Commands
+
+  ### Step 1: Go to Practical Folder
+
+  cd group_b/05_tableau_visualization
+
+  ### Step 2: Create Virtual Environment
+
+  python3 -m venv .venv
+
+  ### Step 3: Activate Virtual Environment
+
+  source .venv/bin/activate
+
+  ### Step 4: Install Dependencies
+
+  pip install -r requirements.txt
+
+  Dependency:
+
+  pandas
+
+  ### Step 5: Run Data Preparation Script
+
+  python prep_tableau_data.py
+
+  Expected output:
+
+  Prepared Tableau files in outputs
+
+  ### Step 6: Check Generated Files
+
+  ls outputs
+
+  Expected:
+
+  adult_tableau.csv
+  iris_tableau.csv
+  adult_network_edges.csv
+
+  ### Step 7: Open Tableau
+
+  Open Tableau Desktop or Tableau Public.
+
+  Import CSV files from:
+
+  group_b/05_tableau_visualization/outputs/
+
+  Use:
+
+  adult_tableau.csv
+  iris_tableau.csv
+  adult_network_edges.csv
+
+  ## 4. Code Explanation With File Reference
+
+  Main code file:
+
+  group_b/05_tableau_visualization/prep_tableau_data.py
+
+  ### Imports
+
+  from pathlib import Path
+  import pandas as pd
+
+  Path handles file paths.
+
+  pandas loads, modifies, and saves CSV data.
+
+  ### Folder Setup
+
+  BASE = Path(__file__).parent
+  DATA_DIR = BASE / "data"
+  OUT_DIR = BASE / "outputs"
+  OUT_DIR.mkdir(exist_ok=True)
+
+  This defines input and output folders.
+
+  ### Generic Data Loading Function
+
+  def load_df(name: str, sample_name: str) -> pd.DataFrame:
+      path = DATA_DIR / name
+      sample = DATA_DIR / sample_name
+      return pd.read_csv(path if path.exists() else sample)
+
+  This first checks for full dataset.
+
+  For Adult:
+
+  data/adult.csv
+
+  If not found, it uses:
+
+  data/adult_sample.csv
+
+  For Iris:
+
+  data/iris.csv
+
+  If not found, it uses:
+
+  data/iris_sample.csv
+
+  So the practical runs even with sample data.
+
+  ### Preparing Iris Dataset
+
+  Function:
+
+  def prep_iris() -> None:
+
+  Load Iris data:
+
+  iris = load_df("iris.csv", "iris_sample.csv")
+
+  Create sepal area:
+
+  iris["sepal_area"] = iris["sepal_length"] * iris["sepal_width"]
+
+  Create petal area:
+
+  iris["petal_area"] = iris["petal_length"] * iris["petal_width"]
+
+  Why area?
+
+  Because length and width alone are separate features. Area gives a combined size indicator.
+
+  Save prepared Iris file:
+
+  iris.to_csv(OUT_DIR / "iris_tableau.csv", index=False)
+
+  Output:
+
+  outputs/iris_tableau.csv
+
+  ### Preparing Adult Dataset
+
+  Function:
+
+  def prep_adult() -> None:
+
+  Load Adult data:
+
+  adult = load_df("adult.csv", "adult_sample.csv")
+
+  Create age groups:
+
+  adult["age_group"] = pd.cut(
+      adult["age"],
+      bins=[0, 25, 35, 45, 55, 65, 100],
+      labels=["<=25", "26-35", "36-45", "46-55", "56-65", "65+"]
+  )
+
+  This converts raw age values into categories.
+
+  Example:
+
+  age 39 -> 36-45
+  age 50 -> 46-55
+  age 28 -> 26-35
+
+  This is useful for grouped charts.
+
+  Create hours-per-week groups:
+
+  adult["hours_group"] = pd.cut(
+      adult["hours_per_week"],
+      bins=[0, 20, 40, 60, 100],
+      labels=["<=20", "21-40", "41-60", "60+"]
+  )
+
+  Example:
+
+  40 hours -> 21-40
+  13 hours -> <=20
+
+  Create binary income column:
+
+  adult["income_binary"] = adult["income"].map({"<=50K": 0, ">50K": 1})
+
+  This converts income category into numeric form.
+
+  Meaning:
+
+  <=50K -> 0
+  >50K  -> 1
+
+  This is useful for aggregation in Tableau.
+
+  Example:
+
+  Average income_binary by education
+
+  If average is closer to 1, more people in that group earn >50K.
+
+  Create synthetic date column:
+
+  adult["record_date"] = pd.date_range(
+      start="2020-01-01", periods=len(adult), freq="D"
+  )
+
+  This creates one date per row.
+
+  It is used only to demonstrate temporal visualization.
+
+  Save Adult Tableau data:
+
+  adult.to_csv(OUT_DIR / "adult_tableau.csv", index=False)
+
+  Output:
+
+  outputs/adult_tableau.csv
+
+  ### Creating Network Edge Data
+
+  edges = adult[["occupation", "education"]].dropna()
+  edges.to_csv(OUT_DIR / "adult_network_edges.csv", index=False)
+
+  This creates a relationship table between:
+
+  occupation
+  education
+
+  Each row is like an edge:
+
+  occupation -> education
+
+  Output:
+
+  outputs/adult_network_edges.csv
+
+  This supports network-style or relationship-based visualization.
+
+  ### Main Function
+
+  def main() -> None:
+      prep_iris()
+      prep_adult()
+      print("Prepared Tableau files in", OUT_DIR)
+
+  This runs both preparation functions.
+
+  ## 5. Tableau Chart Creation Guide
+
+  ### Chart 1: 1D Histogram of Age
+
+  Dataset:
+
+  adult_tableau.csv
+
+  Use:
+
+  age
+
+  Steps:
+
+  1. Drag age to Columns
+  2. Create bins if needed
+  3. Drag Number of Records or count to Rows
+  4. Select histogram/bar chart
+
+  Purpose:
+
+  Shows age distribution
+
+  ### Chart 2: 2D Scatter Plot
+
+  Dataset:
+
+  iris_tableau.csv
+
+  Use:
+
+  sepal_length
+  sepal_width
+  species
+
+  Steps:
+
+  1. Drag sepal_length to Columns
+  2. Drag sepal_width to Rows
+  3. Drag species to Color
+
+  Purpose:
+
+  Shows relationship between sepal length and sepal width
+
+  ### Chart 3: 3D / Bubble Visualization
+
+  Dataset:
+
+  iris_tableau.csv
+
+  Use:
+
+  sepal_length
+  sepal_width
+  petal_area
+  species
+
+  Steps:
+
+  1. Drag sepal_length to Columns
+  2. Drag sepal_width to Rows
+  3. Drag petal_area to Size
+  4. Drag species to Color
+
+  Purpose:
+
+  Shows multiple variables in one chart
+
+  ### Chart 4: Temporal Visualization
+
+  Dataset:
+
+  adult_tableau.csv
+
+  Use:
+
+  record_date
+  hours_per_week
+
+  Steps:
+
+  1. Drag record_date to Columns
+  2. Drag hours_per_week to Rows
+  3. Use average of hours_per_week
+  4. Select line chart
+
+  Purpose:
+
+  Shows hours worked over generated time sequence
+
+  ### Chart 5: Multidimensional Visualization
+
+  Dataset:
+
+  iris_tableau.csv
+
+  Use:
+
+  sepal_length
+  petal_length
+  petal_area
+  species
+
+  Steps:
+
+  1. Drag sepal_length to Columns
+  2. Drag petal_length to Rows
+  3. Drag species to Color
+  4. Drag petal_area to Size
+  5. Drag species to Shape if needed
+
+  Purpose:
+
+  Shows multiple dimensions and measures together
+
+  ### Chart 6: Tree / Hierarchical Visualization
+
+  Dataset:
+
+  adult_tableau.csv
+
+  Use:
+
+  education
+  occupation
+  income_binary
+
+  Steps:
+
+  1. Select Treemap chart
+  2. Drag education to Color or Label
+  3. Drag occupation to Detail or Label
+  4. Drag count of records to Size
+  5. Optionally drag average income_binary to Color
+
+  Purpose:
+
+  Shows hierarchy between education and occupation
+
+  ### Chart 7: Network / Relationship Visualization
+
+  Dataset:
+
+  adult_network_edges.csv
+
+  Use:
+
+  occupation
+  education
+
+  Simple Tableau approach:
+
+  1. Drag occupation to Rows
+  2. Drag education to Columns
+  3. Drag count of records to Text or Color
+  4. Use highlight table or packed bubbles
+
+  Purpose:
+
+  Shows relationship frequency between occupation and education
+
+  ## 6. Final Expected Output
+
+  After Python preparation, expected files:
+
+  adult_tableau.csv
+  iris_tableau.csv
+  adult_network_edges.csv
+
+  After Tableau work, expected visualizations:
+
+  1D histogram
+  2D scatter plot
+  3D/bubble chart
+  Tree/hierarchical treemap
+  Network/relationship visualization
+  ## 7. Important Viva Questions
+
+  What is Tableau?
+  A BI and visualization tool used to create charts, dashboards, and interactive reports.
+
+  What is BI?
+  Business Intelligence means analyzing data to support decision-making.
+
+  What is a dimension in Tableau?
+  Categorical field used for grouping, like species, education, or occupation.
+
+  What is a measure in Tableau?
+  Numeric field used for calculations, like age, hours_per_week, or petal_area.
+
+  What is 1D visualization?
+  Visualization of one variable, such as age histogram.
+
+  What is 2D visualization?
+  Visualization using two variables, such as sepal length vs sepal width.
+
+  How can Tableau show more than two variables?
+  By using color, size, label, shape, and filters.
+
+  Why create sepal_area and petal_area?
+  To create combined size-related features from length and width.
+
+  Why create record_date?
+  To demonstrate temporal visualization.
+
+  What is a treemap?
+  A hierarchical visualization where rectangle size/color represents values.
+
+  What is the purpose of adult_network_edges.csv?
+  To represent relationships between occupation and education.
+
+  Say next and I’ll explain Practical 9: Review Scraper for E-commerce Website.
+
+─ Worked for 3m 55s ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+› next
+
+
+• I’ll cover Practical 9 using the scraper script, config selectors, and sample HTML page, so the explanation includes both the safe sample run and how a real website would be adapted.
+
+• Explored
+  └ Read scrape_reviews.py, config.json, README.md, sample_product_page.html
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• # Practical 9: Review Scraper for E-commerce Website
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to create a Python web scraper that extracts customer review information from an e-commerce product page.
+
+  The scraper extracts:
+
+  customer name
+  rating
+  comment title
+  comment body
+  comment tags
+  review date
+
+  This practical covers:
+
+  - Web scraping
+  - Reading HTML from a local file or live URL
+  - Parsing HTML using BeautifulSoup
+  - Extracting data using CSS selectors
+  - Extracting structured JSON-LD review data
+  - Converting scraped data into structured format
+  - Saving output as JSON and CSV
+
+  Repo folder:
+
+  group_c/01_review_scraper
+
+  Important files:
+
+  group_c/01_review_scraper/scrape_reviews.py
+  group_c/01_review_scraper/config.json
+  group_c/01_review_scraper/data/sample_product_page.html
+  group_c/01_review_scraper/requirements.txt
+
+  Main script:
+
+  scrape_reviews.py
+
+  Output files:
+
+  outputs/reviews.json
+  outputs/reviews.csv
+
+  For safe practical execution, use the included sample HTML file:
+
+  python scrape_reviews.py --source data/sample_product_page.html
+
+  ## 2. Theory Explanation
+
+  ### What Is Web Scraping?
+
+  Web scraping means automatically extracting data from web pages.
+
+  Instead of manually copying reviews from a website, a scraper reads the HTML page and extracts useful information.
+
+  Example review on a web page:
+
+  Reviewer: Asha
+  Rating: 4.5
+  Title: Great battery
+  Comment: Lasts almost two days with normal use.
+
+  The scraper converts this into structured data like JSON or CSV.
+
+  ### What Is HTML?
+
+  HTML is the markup language used to create web pages.
+
+  A web page is made of elements like:
+
+  <div>
+  <span>
+  h1
+  p
+  script
+
+  Example from your sample page:
+
+  <div class="review">
+    <span class="reviewer">Asha</span>
+    <span class="rating">4.5</span>
+    <div class="title">Great battery</div>
+    <div class="body">Lasts almost two days with normal use.</div>
+  </div>
+
+  Here:
+
+  div class="review" means one review block.
+
+  span class="reviewer" stores reviewer name.
+
+  span class="rating" stores rating.
+
+  ### What Is BeautifulSoup?
+
+  BeautifulSoup is a Python library used to parse HTML.
+
+  It allows us to search HTML elements using:
+
+  tag names
+  class names
+  CSS selectors
+  attributes
+
+  In this practical, BeautifulSoup converts raw HTML text into a searchable object.
+
+  Code:
+
+  soup = BeautifulSoup(html, "html.parser")
+
+  After this, we can search the page.
+
+  ### What Are CSS Selectors?
+
+  CSS selectors are patterns used to select HTML elements.
+
+  Examples:
+
+  .review selects elements with class review.
+
+  .reviewer selects elements with class reviewer.
+
+  .tags .tag selects elements with class tag inside an element with class tags.
+
+  Your selector config is in:
+
+  config.json
+
+  Content:
+
+  {
+    "review_block": ".review",
+    "reviewer": ".reviewer",
+    "rating": ".rating",
+    "title": ".title",
+    "body": ".body",
+    "date": ".date",
+    "tags": ".tags .tag"
+  }
+
+  This means:
+
+  Find each review using .review
+  Inside each review, find reviewer using .reviewer
+  Find rating using .rating
+  Find title using .title
+  Find body using .body
+  Find date using .date
+  Find tags using .tags .tag
+
+  ### What Is JSON-LD?
+
+  JSON-LD is structured data embedded inside web pages.
+
+  Many e-commerce websites include product and review data in this format for search engines.
+
+  It usually appears inside:
+
+  <script type="application/ld+json">
+
+  The scraper first tries to extract reviews from JSON-LD because it is cleaner and more structured.
+
+  If JSON-LD reviews are not found, it falls back to CSS selectors from config.json.
+
+  So the extraction order is:
+
+  Try JSON-LD first
+  If no reviews found, use CSS selectors
+
+  ### What Is requests?
+
+  requests is a Python library used to fetch web pages from URLs.
+
+  Example:
+
+  requests.get("https://example.com/product")
+
+  In this practical, if the source starts with:
+
+  http://
+  https://
+
+  the script uses requests.
+
+  If the source is a file path, it reads local HTML directly.
+
+  ### Why Use Local Sample HTML?
+
+  Live websites may block scraping or change their HTML structure.
+
+  Also, some websites require JavaScript rendering, login, or permission.
+
+  For practical and viva, the local file is safer:
+
+  data/sample_product_page.html
+
+  It proves the scraper logic works without depending on internet or website changes.
+
+  ### What Are JSON and CSV Outputs?
+
+  The script saves extracted reviews in two formats.
+
+  JSON:
+
+  outputs/reviews.json
+
+  Good for programmatic use.
+
+  CSV:
+
+  outputs/reviews.csv
+
+  Good for Excel, spreadsheets, and tabular analysis.
+
+  ## 3. Practical Steps With Commands
+
+  ### Step 1: Go to Practical Folder
+
+  cd group_c/01_review_scraper
+
+  ### Step 2: Create Virtual Environment
+
+  python3 -m venv .venv
+
+  ### Step 3: Activate Virtual Environment
+
+  source .venv/bin/activate
+
+  ### Step 4: Install Dependencies
+
+  pip install -r requirements.txt
+
+  Dependencies:
+
+  requests
+  beautifulsoup4
+
+  ### Step 5: Run Scraper on Sample HTML
+
+  python scrape_reviews.py --source data/sample_product_page.html
+
+  Expected output:
+
+  Saved 3 reviews to outputs
+
+  ### Step 6: Check Output Files
+
+  ls outputs
+
+  Expected:
+
+  reviews.csv
+  reviews.json
+
+  ### Step 7: Optional Live URL Execution
+
+  Only where permitted:
+
+  python scrape_reviews.py --source "https://example.com/product"
+
+  For a real website, you may need to update:
+
+  config.json
+
+  because each website uses different HTML class names.
+
+  ## 4. Code Explanation With File Reference
+
+  Main code file:
+
+  group_c/01_review_scraper/scrape_reviews.py
+
+  ### Imports
+
+  import argparse
+  import json
+  import re
+  from pathlib import Path
+  from typing import List, Dict, Any, Optional
+
+  import requests
+  from bs4 import BeautifulSoup
+
+  Meaning:
+
+  argparse: handles command-line arguments
+  json: reads/writes JSON data
+  re: extracts rating number using regular expression
+  Path: handles file paths
+  requests: fetches web pages from URLs
+  BeautifulSoup: parses HTML
+
+  ### Output Folder Setup
+
+  BASE = Path(__file__).parent
+  OUT_DIR = BASE / "outputs"
+  OUT_DIR.mkdir(exist_ok=True)
+
+  This creates:
+
+  outputs/
+
+  if it does not exist.
+
+  ### Loading HTML
+
+  Function:
+
+  def load_html(source: str) -> str:
+
+  If source is a URL:
+
+  if source.startswith("http://") or source.startswith("https://"):
+      resp = requests.get(source, timeout=20)
+      resp.raise_for_status()
+      return resp.text
+
+  This fetches the web page.
+
+  timeout=20 means wait maximum 20 seconds.
+
+  raise_for_status() raises an error if the request fails.
+
+  If source is a local file:
+
+  return Path(source).read_text(encoding="utf-8")
+
+  This reads the HTML file from disk.
+
+  ### Parsing Rating
+
+  Function:
+
+  def parse_rating(text: str) -> Optional[float]:
+
+  Purpose:
+
+  Extract numeric rating from text
+
+  Example inputs:
+
+  "4.5"
+  "Rated 4.5 out of 5"
+  "5 stars"
+
+  Regular expression:
+
+  match = re.search(r"([0-9]+(\.[0-9]+)?)", text)
+
+  This finds the first number in the text.
+
+  Then:
+
+  return float(match.group(1))
+
+  So rating becomes a numeric value like:
+
+  4.5
+  3.0
+  5.0
+
+  ### Extracting JSON-LD Reviews
+
+  Function:
+
+  def extract_jsonld_reviews(soup: BeautifulSoup) -> List[Dict[str, Any]]:
+
+  Find JSON-LD scripts:
+
+  scripts = soup.find_all("script", attrs={"type": "application/ld+json"})
+
+  Then parse the JSON:
+
+  data = json.loads(raw)
+
+  The function looks for:
+
+  review
+  author
+  reviewRating
+  ratingValue
+  reviewBody
+  datePublished
+
+  It stores reviews in this format:
+
+  {
+      "customer_name": author or "",
+      "rating": parse_rating(str(rating)) if rating else None,
+      "comment_title": r.get("name", ""),
+      "comment": r.get("reviewBody", ""),
+      "comment_tags": [],
+      "date": r.get("datePublished", "")
+  }
+
+  This method works well when a website provides structured review data.
+
+  ### Extracting Reviews With CSS Selectors
+
+  Function:
+
+  def extract_with_selectors(soup: BeautifulSoup, config: dict) -> List[Dict[str, Any]]:
+
+  First it finds all review blocks:
+
+  blocks = soup.select(config.get("review_block", ""))
+
+  For your config:
+
+  .review
+
+  So it finds:
+
+  <div class="review">
+
+  For each review block, it extracts fields:
+
+  name = block.select_one(config.get("reviewer", ""))
+  rating = block.select_one(config.get("rating", ""))
+  title = block.select_one(config.get("title", ""))
+  body = block.select_one(config.get("body", ""))
+  date = block.select_one(config.get("date", ""))
+  tags = block.select(config.get("tags", ""))
+
+  Then it creates a dictionary:
+
+  {
+      "customer_name": name.get_text(strip=True) if name else "",
+      "rating": parse_rating(rating.get_text(strip=True)) if rating else None,
+      "comment_title": title.get_text(strip=True) if title else "",
+      "comment": body.get_text(strip=True) if body else "",
+      "comment_tags": [t.get_text(strip=True) for t in tags] if tags else [],
+      "date": date.get_text(strip=True) if date else ""
+  }
+
+  ### Saving Outputs
+
+  Function:
+
+  def save_outputs(reviews: List[Dict[str, Any]]) -> None:
+
+  Save JSON:
+
+  json_path.write_text(json.dumps(reviews, indent=2), encoding="utf-8")
+
+  This creates readable JSON.
+
+  Save CSV:
+
+  headers = list(reviews[0].keys())
+
+  Headers become:
+
+  customer_name,rating,comment_title,comment,comment_tags,date
+
+  For tags, list values are joined using:
+
+  "|".join(value)
+
+  So:
+
+  ["battery", "value"]
+
+  becomes:
+
+  battery|value
+
+  CSV output:
+
+  outputs/reviews.csv
+
+  JSON output:
+
+  outputs/reviews.json
+
+  ### Command-Line Arguments
+
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--source", required=True, help="URL or local HTML file")
+  parser.add_argument("--config", default=str(BASE / "config.json"))
+
+  The user must provide:
+
+  --source
+
+  Example:
+
+  python scrape_reviews.py --source data/sample_product_page.html
+
+  --config is optional because default is:
+
+  config.json
+
+  ### Main Flow
+
+  html = load_html(args.source)
+  soup = BeautifulSoup(html, "html.parser")
+
+  First tries JSON-LD:
+
+  reviews = extract_jsonld_reviews(soup)
+
+  If no reviews found:
+
+  if not reviews:
+      config = json.loads(Path(args.config).read_text(encoding="utf-8"))
+      reviews = extract_with_selectors(soup, config)
+
+  Then saves:
+
+  save_outputs(reviews)
+
+  ## 5. Sample HTML Explanation
+
+  Sample file:
+
+  data/sample_product_page.html
+
+  It contains three review blocks.
+
+  Example:
+
+  <div class="review">
+    <span class="reviewer">Asha</span>
+    <span class="rating">4.5</span>
+    <div class="title">Great battery</div>
+    <div class="body">Lasts almost two days with normal use.</div>
+    <div class="date">2024-11-01</div>
+    <div class="tags">
+      <span class="tag">battery</span>
+      <span class="tag">value</span>
+    </div>
+  </div>
+
+  This becomes:
+
+  {
+    "customer_name": "Asha",
+    "rating": 4.5,
+    "comment_title": "Great battery",
+    "comment": "Lasts almost two days with normal use.",
+    "comment_tags": ["battery", "value"],
+    "date": "2024-11-01"
+  }
+
+  ## 6. Final Expected Output
+
+  After running:
+
+  python scrape_reviews.py --source data/sample_product_page.html
+
+  Saved 3 reviews to outputs
+
+  Expected files:
+
+  outputs/reviews.json
+  Ravi
+  Neha
+
+  ## 7. Important Viva Questions
+
+  What is web scraping?
+  Extracting useful data from web pages automatically.
+
+  What is BeautifulSoup?
+  A Python library used to parse HTML and extract elements.
+
+  What is a CSS selector?
+  A pattern used to select HTML elements, such as .review or .rating.
+
+  What is JSON-LD?
+  Structured JSON data embedded in HTML, often used by search engines.
+
+  Why does the script try JSON-LD first?
+  Because structured data is cleaner and easier to extract accurately.
+
+  What is requests used for?
+  Fetching HTML content from a live URL.
+
+  What is argparse used for?
+  Reading command-line arguments like --source.
+
+  Why use a local sample HTML file?
+  It makes the practical reliable even without internet or live website changes.
+
+  Why save both JSON and CSV?
+  JSON is good for programs, CSV is good for spreadsheets and tabular analysis.
+
+  What is robots.txt or website permission?
+  Rules or terms that tell whether automated scraping is allowed.
+
+  Say next and I’ll explain Practical 10: Machine Learning Mini Project - Graduate Admissions Prediction.
+
+
+› next
+
+
+• I’ll cover the final practical using the admissions model script, sample dataset, and generated outputs so the explanation stays tied to exactly what your repo runs.
+
+• Explored
+  └ Read README.md
+    List outputs
+    Read admissions_models.py, admissions_sample.csv
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+• # Practical 10: Machine Learning Mini Project - Graduate Admissions Prediction
+
+  ## 1. Executive Summary
+
+  In this practical, you are expected to build a small machine learning project using the Graduate Admissions dataset.
+
+  The goal is to predict:
+
+  Chance of Admit
+
+  based on student profile features like:
+
+  GRE Score
+  TOEFL Score
+  University Rating
+  SOP
+  LOR
+  CGPA
+  Research
+
+  This practical covers:
+
+  - Loading a dataset
+  - Preprocessing column names
+  - Separating input features and target variable
+  - Splitting data into training and testing sets
+  - Training multiple regression models
+  - Comparing model performance
+  - Selecting the best model
+  - Saving the trained model
+  - Saving evaluation metrics
+
+  Repo folder:
+
+  group_c/02_ml_mini_project
+
+  Important files:
+
+  group_c/02_ml_mini_project/admissions_models.py
+  group_c/02_ml_mini_project/data/admissions_sample.csv
+  group_c/02_ml_mini_project/requirements.txt
+
+  Main script:
+
+  admissions_models.py
+
+  Generated output files:
+
+  outputs/metrics.json
+  outputs/best_model.pkl
+  outputs/predictions_sample.csv
+
+  ## 2. Theory Explanation
+
+  ### What Is Machine Learning?
+
+  Machine learning is a method where a computer learns patterns from data and uses those patterns to make predictions.
+
+  Instead of manually writing rules like:
+
+  If CGPA is high and GRE is high, chance is high
+
+  we give data to a model, and it learns the relationship between input features and output value.
+
+  ### What Type of Problem Is This?
+
+  This is a regression problem.
+
+  Why?
+
+  Because the output is a continuous numeric value:
+
+  Chance of Admit = 0.92
+  Chance of Admit = 0.76
+  Chance of Admit = 0.65
+
+  The model is not predicting categories like yes/no. It predicts a numeric score between approximately 0 and 1.
+
+  So:
+
+  Predicting class/category -> classification
+  Predicting numeric value -> regression
+
+  This practical is regression.
+
+  ### Dataset Explanation
+
+  Dataset file:
+
+  data/admissions_sample.csv
+
+  Sample columns:
+
+  Serial No.
+  GRE Score
+  TOEFL Score
+  University Rating
+  SOP
+  LOR
+  CGPA
+  Research
+  Chance of Admit
+
+  Example row:
+
+  1,337,118,4,4.5,4.5,9.65,1,0.92
+
+  Meaning:
+
+  GRE Score: Graduate Record Examination score
+  TOEFL Score: English proficiency score
+  University Rating: rating of university applied to
+  SOP: Statement of Purpose strength
+  LOR: Letter of Recommendation strength
+  CGPA: undergraduate academic performance
+  Research: whether student has research experience
+  Chance of Admit: target value to predict
+
+  ### What Are Features?
+
+  Features are input columns used by the model to make predictions.
+
+  In this practical, features are:
+
+  GRE Score
+  TOEFL Score
+  University Rating
+  SOP
+  LOR
+  CGPA
+  Research
+
+  After preprocessing, their names become:
+
+  gre_score
+  toefl_score
+  university_rating
+  sop
+  lor
+  cgpa
+  research
+
+  ### What Is Target Variable?
+
+  Target variable is the output we want to predict.
+
+  Here:
+
+  Chance of Admit
+
+  After preprocessing:
+
+  chance_of_admit
+
+  So:
+
+  X = input features
+  y = target variable
+
+  ### Why Remove Serial Number?
+
+  Serial No. is only an identifier.
+
+  It does not describe student quality.
+
+  Example:
+
+  Serial No. 1
+  Serial No. 2
+  Serial No. 3
+
+  These are just row numbers. They should not influence admission prediction.
+
+  So the script drops:
+
+  serial_no.
+  serial_no
+
+  ### What Is Preprocessing?
+
+  Preprocessing means preparing raw data before training.
+
+  In this practical, preprocessing includes:
+
+  - Normalizing column names
+  - Dropping serial number column
+  - Renaming target column if needed
+  - Separating features and target
+
+  Column names are normalized because original columns contain spaces and mixed case.
+
+  Example:
+
+  GRE Score -> gre_score
+  Chance of Admit -> chance_of_admit
+
+  This makes coding easier.
+
+  ### What Is Train-Test Split?
+
+  Train-test split divides data into two parts:
+
+  training data
+  testing data
+
+  Training data is used to train the model.
+
+  Testing data is used to check how well the model performs on unseen data.
+
+  In this script:
+
+  test_size=0.25
+
+  Meaning:
+
+  75% data for training
+  25% data for testing
+
+  ### Why Do We Need Testing Data?
+
+  If we test the model on the same data used for training, the result may look good but may not prove real performance.
+
+  Testing data helps estimate how the model performs on new students.
+
+  ### What Is Random State?
+
+  The script uses:
+
+  random_state=42
+
+  This makes the train-test split reproducible.
+
+  Without random state, the split may change each time, and results may vary.
+
+  ### Models Used in This Practical
+
+  The script trains and compares three regression models:
+
+  Linear Regression
+  Random Forest Regressor
+  Gradient Boosting Regressor
+
+  ### Model 1: Linear Regression
+
+  Linear Regression is a basic regression algorithm.
+
+  It assumes the target can be predicted using a linear relationship.
+
+  Simple idea:
+
+  Chance = w1*GRE + w2*TOEFL + w3*CGPA + ...
+
+  It is easy to understand and works well when relationships are mostly linear.
+
+  In the code, Linear Regression is used with scaling:
+
+  Pipeline([("scale", StandardScaler()), ("model", LinearRegression())])
+
+  ### Why Scaling Is Used for Linear Regression?
+
+  Features have different ranges.
+
+  Example:
+
+  GRE Score around 300-340
+  TOEFL Score around 100-120
+  CGPA around 7-10
+  Research 0 or 1
+
+  Scaling brings features to a similar range.
+
+  This helps some models work more reliably.
+
+  ### What Is a Pipeline?
+
+  A Pipeline combines preprocessing and model training into one object.
+
+  Here:
+
+  StandardScaler -> LinearRegression
+
+  So during training:
+
+  1. Data is scaled
+  2. Linear Regression is trained
+
+  Code:
+
+  Pipeline([("scale", StandardScaler()), ("model", LinearRegression())])
+
+  ### Model 2: Random Forest Regressor
+
+  Random Forest is an ensemble model.
+
+  It builds many decision trees and combines their outputs.
+
+  In this script:
+
+  RandomForestRegressor(n_estimators=200, random_state=42)
+
+  n_estimators=200 means 200 trees are used.
+
+  Random Forest can capture non-linear relationships better than simple Linear Regression.
+
+  ### Model 3: Gradient Boosting Regressor
+
+  Gradient Boosting is also an ensemble method.
+
+  It builds models step by step, where each new model tries to correct errors made by previous models.
+
+  In this script:
+
+  GradientBoostingRegressor(random_state=42)
+
+  Gradient Boosting often performs well on structured tabular data.
+
+  ### What Is Model Evaluation?
+
+  Model evaluation means checking how good the predictions are.
+
+  This practical uses:
+
+  RMSE
+  R2 score
+
+  ### What Is RMSE?
+
+  RMSE means Root Mean Squared Error.
+
+  It measures prediction error.
+
+  Simple meaning:
+
+  Lower RMSE = better model
+
+  If actual chance is:
+
+  0.92
+
+  and predicted chance is:
+
+  0.88
+
+  error is:
+
+  0.04
+
+  RMSE summarizes such errors across all test samples.
+
+  ### What Is R2 Score?
+
+  R2 score tells how well the model explains variation in the target.
+
+  General meaning:
+
+  R2 closer to 1 = better
+  R2 near 0 = weak model
+  Negative R2 = model is worse than simple baseline
+
+  For viva, remember:
+
+  RMSE should be low
+  R2 should be high
+
+  ### What Is Best Model Selection?
+
+  The script chooses the best model based on lowest RMSE.
+
+  Logic:
+
+  Train all models
+  Calculate RMSE for each
+  Pick model with smallest RMSE
+  Save that model
+
+  ### What Is joblib?
+
+  joblib is used to save trained machine learning models.
+
+  The saved model file is:
+
+  outputs/best_model.pkl
+
+  This file can be loaded later to make predictions without retraining.
+
+  ## 3. Practical Steps With Commands
+
+  ### Step 1: Go to Practical Folder
+
+  cd group_c/02_ml_mini_project
+
+  ### Step 2: Create Virtual Environment
+
+  python3 -m venv .venv
+
+  ### Step 3: Activate Virtual Environment
+
+  source .venv/bin/activate
+
+  ### Step 4: Install Dependencies
+
+  pip install -r requirements.txt
+
+  Dependencies:
+
+  pandas
+  scikit-learn
+  joblib
+
+  ### Step 5: Run Training Script
+
+  python admissions_models.py
+
+  Expected terminal output:
+
+  Training complete. Outputs saved to outputs
+
+  ### Step 6: Check Outputs
+
+  ls outputs
+
+  Expected files:
+
+  best_model.pkl
+  metrics.json
+  predictions_sample.csv
+
+  ## 4. Code Explanation With File Reference
+
+  Main code file:
+
+  group_c/02_ml_mini_project/admissions_models.py
+
+  ### Imports
+
+  from pathlib import Path
+  import json
+
+  import pandas as pd
+  from sklearn.model_selection import train_test_split
+  from sklearn.pipeline import Pipeline
+  from sklearn.preprocessing import StandardScaler
+  from sklearn.linear_model import LinearRegression
+  from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+  from sklearn.metrics import mean_squared_error, r2_score
+  import joblib
+
+  Purpose:
+
+  Path: handle file paths
+  json: save metrics report
+  pandas: load and process CSV
+  train_test_split: divide data into train and test sets
+  Pipeline: combine scaling and model
+  StandardScaler: scale features
+  LinearRegression: baseline regression model
+  RandomForestRegressor: tree ensemble model
+  GradientBoostingRegressor: boosting model
+  mean_squared_error: calculate RMSE
+  r2_score: calculate R2
+  joblib: save trained model
+
+  ### Folder Setup
+
+  BASE = Path(__file__).parent
+  DATA_DIR = BASE / "data"
+  OUT_DIR = BASE / "outputs"
+  OUT_DIR.mkdir(exist_ok=True)
+
+  This sets:
+
+  data folder
+  outputs folder
+
+  Output folder is created automatically if missing.
+
+  ### Loading Data
+
+  Function:
+
+  def load_data() -> pd.DataFrame:
+
+  It checks for full dataset:
+
+  path = DATA_DIR / "admissions.csv"
+
+  If not found, it uses sample:
+
+  sample = DATA_DIR / "admissions_sample.csv"
+
+  Load CSV:
+
+  df = pd.read_csv(path if path.exists() else sample)
+
+  So the practical runs with sample data by default.
+
+  ### Normalizing Column Names
+
+  df.columns = [c.strip().lower().replace(" ", "_") for c in df.columns]
+
+  This changes column names.
+
+  Examples:
+
+  GRE Score -> gre_score
+  TOEFL Score -> toefl_score
+  University Rating -> university_rating
+  Chance of Admit -> chance_of_admit
+
+  This avoids problems caused by spaces and uppercase letters.
+
+  ### Dropping Serial Number
+
+  if "serial_no." in df.columns:
+      df = df.drop(columns=["serial_no."])
+  if "serial_no" in df.columns:
+      df = df.drop(columns=["serial_no"])
+
+  Serial number is removed because it is only an identifier.
+
+  ### Handling Chance of Admit Column
+
+  if "chance_of_admit" not in df.columns:
+      for c in df.columns:
+          if "chance" in c and "admit" in c:
+              df = df.rename(columns={c: "chance_of_admit"})
+              break
+
+  This makes the script flexible.
+
+  Even if target column has slightly different name, it tries to rename it correctly.
+
+  ### Training Function
+
+  def train_models(df: pd.DataFrame) -> dict:
+
+  First, check target column:
+
+  if "chance_of_admit" not in df.columns:
+      raise ValueError("Dataset must include Chance of Admit column")
+
+  This prevents training without target variable.
+
+  ### Separating Features and Target
+
+  X = df.drop(columns=["chance_of_admit"])
+  y = df["chance_of_admit"]
+
+  X contains input features.
+
+  y contains output target.
+
+  Example:
+
+  X = GRE, TOEFL, University Rating, SOP, LOR, CGPA, Research
+  y = Chance of Admit
+
+  ### Train-Test Split
+
+  X_train, X_test, y_train, y_test = train_test_split(
+      X, y, test_size=0.25, random_state=42
+  )
+
+  Meaning:
+
+  75% training
+  25% testing
+
+  ### Defining Models
+
+  models = {
+      "linear": Pipeline([("scale", StandardScaler()), ("model", LinearRegression())]),
+      "random_forest": RandomForestRegressor(n_estimators=200, random_state=42),
+      "gboost": GradientBoostingRegressor(random_state=42)
+  }
+
+  Three models are stored in a dictionary.
+
+  This allows the script to train them one by one in a loop.
+
+  ### Training and Evaluating Models
+
+  for name, model in models.items():
+      model.fit(X_train, y_train)
+      preds = model.predict(X_test)
+
+  For each model:
+
+  1. Train using training data
+  2. Predict using test data
+
+  Calculate RMSE:
+
+  rmse = mean_squared_error(y_test, preds)**0.5
+
+  Calculate R2:
+
+  r2 = r2_score(y_test, preds)
+
+  Store results:
+
+  results[name] = {"rmse": float(rmse), "r2": float(r2)}
+
+  ### Selecting Best Model
+
+  if best_rmse is None or rmse < best_rmse:
+      best_rmse = rmse
+      best_name = name
+      best_model = model
+
+  Best model is chosen by lowest RMSE.
+
+  ### Saving Best Model
+
+  joblib.dump(best_model, OUT_DIR / "best_model.pkl")
+
+  Output:
+
+  outputs/best_model.pkl
+
+  ### Saving Predictions
+
+  pred_df = pd.DataFrame({
+      "actual": y_test.values,
+      "predicted": best_model.predict(X_test)
+  })
+  pred_df.to_csv(OUT_DIR / "predictions_sample.csv", index=False)
+
+  This creates a file comparing actual and predicted values.
+
+  Output:
+
+  outputs/predictions_sample.csv
+
+  Example structure:
+
+  actual,predicted
+  0.76,0.78
+  0.92,0.89
+
+  ### Saving Metrics
+
+  return {"best_model": best_name, "metrics": results}
+
+  Then in main():
+
+  (OUT_DIR / "metrics.json").write_text(json.dumps(report, indent=2))
+
+  Output:
+
+  outputs/metrics.json
+
+  It contains:
+
+  best model name
+  RMSE for each model
+  R2 for each model
+
+  ## 5. Final Expected Output
+
+  After running:
+
+  python admissions_models.py
+
+  Expected terminal output:
+
+  Training complete. Outputs saved to outputs
+
+  Expected files:
+
+  best_model.pkl
+  metrics.json
+  predictions_sample.csv
+
+  Meaning:
+
+  best_model.pkl
+  Saved trained model with lowest RMSE.
+
+  metrics.json
+  Performance comparison of all models.
+
+  predictions_sample.csv
+  Actual vs predicted chance of admit for test samples.
+
+  ## 6. Result Interpretation
+
+  Open:
+
+  outputs/metrics.json
+
+  You will see model results similar to:
+
+  {
+    "best_model": "linear",
+    "metrics": {
+      "linear": {
+        "rmse": 0.05,
+        "r2": 0.80
+      },
+      "random_forest": {
+        "rmse": 0.07,
+        "r2": 0.70
+      },
+      "gboost": {
+        "rmse": 0.06,
+        "r2": 0.75
+      }
+    }
+  }
+
+  Exact numbers may differ.
+
+  How to explain:
+
+  - Model with lowest RMSE is selected as best.
+  - Higher R2 means better fit.
+  - If sample dataset is small, results may not be very stable.
+  - Full Kaggle dataset gives more reliable evaluation.
+
+  ## 7. Important Viva Questions
+
+  What is the aim of this mini project?
+  To predict a student’s chance of admission using academic profile features.
+
+  What type of ML problem is this?
+  Regression, because the target is a continuous numeric value.
+
+  What is the target variable?
+  Chance of Admit.
+
+  What are features?
+  Input columns like GRE score, TOEFL score, CGPA, SOP, LOR, university rating, and research.
+
+  Why is serial number removed?
+  It is only an identifier and does not help prediction.
+
+  What is train-test split?
+  Dividing data into training and testing parts.
+
+  Why do we use testing data?
+  To check model performance on unseen data.
+
+  What is Linear Regression?
+  A regression algorithm that models a linear relationship between features and target.
+
+  What is Random Forest Regressor?
+  An ensemble model made of many decision trees.
+
+  What is Gradient Boosting Regressor?
+  An ensemble model that improves predictions by correcting previous errors.
+
+  What is RMSE?
+  Root Mean Squared Error; lower value means better prediction.
+
+  What is R2 score?
+  A score showing how well the model explains target variation; closer to 1 is better.
+
+  Why use joblib?
+  To save the trained model for later use.
+
+  What is best_model.pkl?
+  The saved model with the lowest RMSE.
+
+  That completes all practicals in your repo.
+
+─ Worked for 2m 40s ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+› Implement {feature}
+
+  gpt-5.5 medium · Context 49% left · /mnt/c/users/admin/desktop/new/dsbda · 5.12M used · main · 5h 71% · weekly 38% · 5.07M in · 49.9K out · dsbda · Ready · Fast off
